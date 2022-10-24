@@ -5,10 +5,10 @@
 
 import Foundation
 
-public class ClockManager {
-    public init() { }
-    
-    public func start() -> Clock {
-        Clock()
-    }
-}
+//public class ClockManager {
+//    public init() { }
+//    
+//    public func start() -> Clock {
+//        Clock(remainingSeconds: 1)
+//    }
+//}

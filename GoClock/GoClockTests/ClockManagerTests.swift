@@ -7,23 +7,23 @@ import XCTest
 import GoClock
 
 class ClockManagerTests: XCTestCase {
-    func test_start_deliversAClockWithTwoDefaultClock() {
-        let sut = makeSUT()
-        
-        let clock = sut.start()
-        
-        XCTAssertEqual(clock.sides, [makeDefaultSide(), makeDefaultSide()])
-        XCTAssertEqual(clock.currentWaitingSide, 0)
-    }
-    
-    // MARK: -- Helpers
-    
-    private func makeSUT() -> ClockManager {
-        let sut = ClockManager()
-        return sut
-    }
-    
-    private func makeDefaultSide() -> Side {
-        Side()
-    }
+//    func test_start_deliversAClockWithTwoDefaultClock() {
+//        let sut = makeSUT()
+//        
+//        let clock = sut.start()
+//        
+//        XCTAssertEqual(clock.sides, [makeSide(), makeSide()])
+//        XCTAssertEqual(clock.currentWaitingSide, 0)
+//    }
+//    
+//    // MARK: -- Helpers
+//    
+//    private func makeSUT() -> ClockManager {
+//        let sut = ClockManager()
+//        return sut
+//    }
+//    
+//    private func makeSide() -> Side {
+//        Side(remainingSeconds: 1)
+//    }
 }
