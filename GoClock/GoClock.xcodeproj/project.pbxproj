@@ -15,6 +15,8 @@
 		386AF334290229AD009CDE32 /* ClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF333290229AD009CDE32 /* ClockTests.swift */; };
 		386AF33629062C55009CDE32 /* ClockTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF33529062C55009CDE32 /* ClockTimer.swift */; };
 		386AF33829062E6C009CDE32 /* ClockTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF33729062E6C009CDE32 /* ClockTimerTests.swift */; };
+		386AF3792906C657009CDE32 /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3782906C657009CDE32 /* Side.swift */; };
+		386AF37B2906C769009CDE32 /* SideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF37A2906C769009CDE32 /* SideTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 		386AF333290229AD009CDE32 /* ClockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockTests.swift; sourceTree = "<group>"; };
 		386AF33529062C55009CDE32 /* ClockTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockTimer.swift; sourceTree = "<group>"; };
 		386AF33729062E6C009CDE32 /* ClockTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockTimerTests.swift; sourceTree = "<group>"; };
+		386AF3782906C657009CDE32 /* Side.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
+		386AF37A2906C769009CDE32 /* SideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 				3816A8D5290024BE005DA4A7 /* Clock.swift */,
 				3816A8D729010EDF005DA4A7 /* ClockManager.swift */,
 				386AF33529062C55009CDE32 /* ClockTimer.swift */,
+				386AF3782906C657009CDE32 /* Side.swift */,
 			);
 			path = GoClock;
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 				3816A8D92901322E005DA4A7 /* ClockManagerTests.swift */,
 				386AF333290229AD009CDE32 /* ClockTests.swift */,
 				386AF33729062E6C009CDE32 /* ClockTimerTests.swift */,
+				386AF37A2906C769009CDE32 /* SideTests.swift */,
 			);
 			path = GoClockTests;
 			sourceTree = "<group>";
@@ -209,6 +215,7 @@
 			files = (
 				3816A8D829010EDF005DA4A7 /* ClockManager.swift in Sources */,
 				3816A8D6290024BE005DA4A7 /* Clock.swift in Sources */,
+				386AF3792906C657009CDE32 /* Side.swift in Sources */,
 				386AF33629062C55009CDE32 /* ClockTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,6 +226,7 @@
 			files = (
 				386AF334290229AD009CDE32 /* ClockTests.swift in Sources */,
 				386AF33829062E6C009CDE32 /* ClockTimerTests.swift in Sources */,
+				386AF37B2906C769009CDE32 /* SideTests.swift in Sources */,
 				3816A8DA2901322E005DA4A7 /* ClockManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

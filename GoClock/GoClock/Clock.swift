@@ -37,21 +37,3 @@ import Foundation
 //        }
 //    }
 //}
-
-public struct Side: Equatable {
-    public init(remainingSeconds: Int) {
-        self.remainingSeconds = remainingSeconds
-        self.remainingSecondsInDouble = Double(remainingSeconds)
-    }
-    
-    public var remainingSeconds: Int
-    private var remainingSecondsInDouble: Double
-    
-    func start() {
-        
-    }
-    
-    func stop() {
-        
-    }
-}
