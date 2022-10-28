@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol Side {
+public protocol Side {
     var remainingSeconds: UInt { get }
     
     func setUpdatedClosure(_ updated: @escaping () -> Void)
@@ -14,17 +14,17 @@ protocol Side {
     func stop()
 }
 
-class ConcreteSide: Side, Equatable {
+public class ConcreteSide: Side {
     
     private let timer: GoTimer
-    var remainingSeconds: UInt {
+    public var remainingSeconds: UInt {
         let seconds = floor(remainingTime)
         return remainingTime - seconds < DefaultInterval / 2 ? UInt(seconds) : UInt(seconds) + 1
     }
     private var remainingTime: TimeInterval
     private var updated: (() -> Void)?
     
-    init(totalSeconds: UInt, timer: GoTimer) {
+    public init(totalSeconds: UInt, timer: GoTimer) {
         self.timer = timer
         self.remainingTime = Double(totalSeconds)
         timer.setTickedClosure { [weak self] interval in
@@ -39,22 +39,18 @@ class ConcreteSide: Side, Equatable {
         }
     }
     
-    func setUpdatedClosure(_ updated: @escaping () -> Void) {
+    public func setUpdatedClosure(_ updated: @escaping () -> Void) {
         self.updated = updated
     }
     
-    func start() {
+    public func start() {
         guard remainingSeconds > 0 || abs(remainingTime - Double(remainingSeconds)) > DefaultInterval / 2 else {
             return
         }
         timer.fire()
     }
     
-    func stop() {
+    public func stop() {
         timer.invalidate()
-    }
-    
-    static func == (lhs: ConcreteSide, rhs: ConcreteSide) -> Bool {
-        lhs.remainingTime == rhs.remainingTime
     }
 }

@@ -5,12 +5,12 @@
 
 import Foundation
 
-class GoClock {
-    let sides: [Side]
+public class GoClock {
+    public let sides: [Side]
     var currentWaitingIndex = 0
     var updated: (() -> Void)?
     
-    init(sides: [Side]) {
+    public init(sides: [Side]) {
         self.sides = sides
         sides.enumerated().forEach { (index, side) in
             side.setUpdatedClosure { [weak self] in
@@ -23,11 +23,11 @@ class GoClock {
         }
     }
     
-    func setUpdatedClosure(_ updated: @escaping () -> Void) {
+    public func setUpdatedClosure(_ updated: @escaping () -> Void) {
         self.updated = updated
     }
     
-    func switchSide() {
+    public func switchSide() {
         sides[currentWaitingIndex].start()
         currentWaitingIndex = currentWaitingIndex == 0 ? 1 : 0
         sides[currentWaitingIndex].stop()

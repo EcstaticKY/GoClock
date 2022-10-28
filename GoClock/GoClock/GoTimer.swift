@@ -5,15 +5,15 @@
 
 import Foundation
 
-let DefaultInterval = 0.1
+public let DefaultInterval = 0.1
 
-class GoTimer {
+public class GoTimer {
     private let interval: TimeInterval
     private let timeProvider: Timer.Type
     private var ticked: ((TimeInterval) -> Void)?
     private var timer: Timer?
     
-    init(interval: TimeInterval = DefaultInterval, timeProvider: Timer.Type = Timer.self) {
+    public init(interval: TimeInterval = DefaultInterval, timeProvider: Timer.Type = Timer.self) {
         self.timeProvider = timeProvider
         self.interval = interval
     }
