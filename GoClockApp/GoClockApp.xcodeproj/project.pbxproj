@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		380A438B290C02860056EF00 /* GoClock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380A438A290C02860056EF00 /* GoClock.framework */; };
 		380A438C290C02860056EF00 /* GoClock.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 380A438A290C02860056EF00 /* GoClock.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		380A4391290C07580056EF00 /* MockSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A4390290C07580056EF00 /* MockSide.swift */; };
+		380A4393290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A4392290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift */; };
 		386AF3CF290BFBF6009CDE32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3CE290BFBF6009CDE32 /* AppDelegate.swift */; };
 		386AF3D1290BFBF6009CDE32 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3D0290BFBF6009CDE32 /* SceneDelegate.swift */; };
 		386AF3D3290BFBF6009CDE32 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3D2290BFBF6009CDE32 /* ViewController.swift */; };
@@ -44,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		380A438A290C02860056EF00 /* GoClock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GoClock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		380A4390290C07580056EF00 /* MockSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSide.swift; sourceTree = "<group>"; };
+		380A4392290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+TrackForMemoryLeaks.swift"; sourceTree = "<group>"; };
 		386AF3CB290BFBF6009CDE32 /* GoClockApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoClockApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386AF3CE290BFBF6009CDE32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		386AF3D0290BFBF6009CDE32 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				386AF3E5290BFBF8009CDE32 /* GoClockViewControllerTests.swift */,
+				380A4390290C07580056EF00 /* MockSide.swift */,
+				380A4392290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift */,
 			);
 			path = GoClockAppTests;
 			sourceTree = "<group>";
@@ -236,6 +242,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				380A4391290C07580056EF00 /* MockSide.swift in Sources */,
+				380A4393290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift in Sources */,
 				386AF3E6290BFBF8009CDE32 /* GoClockViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
