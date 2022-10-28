@@ -69,35 +69,4 @@ final class GoClockTests: XCTestCase {
         
         return sut
     }
-    
-    private class MockSide: Side {
-        enum Message {
-        case start, stop
-        }
-        
-        var remainingSeconds: UInt
-        var messages = [Message]()
-        var updated: (() -> Void)?
-        
-        init(remainingSeconds: UInt) {
-            self.remainingSeconds = remainingSeconds
-        }
-        
-        func setUpdatedClosure(_ updated: @escaping () -> Void) {
-            self.updated = updated
-        }
-        
-        func start() {
-            messages.append(.start)
-        }
-        
-        func stop() {
-            messages.append(.stop)
-        }
-        
-        func callsUpdated() {
-            remainingSeconds -= 1
-            updated?()
-        }
-    }
 }

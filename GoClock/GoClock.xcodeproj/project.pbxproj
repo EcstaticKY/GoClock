@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380A438F290C06B00056EF00 /* MockSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A438E290C06B00056EF00 /* MockSide.swift */; };
 		3816A8C6290024A9005DA4A7 /* GoClock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3816A8BD290024A8005DA4A7 /* GoClock.framework */; };
 		3816A8CC290024A9005DA4A7 /* GoClock.h in Headers */ = {isa = PBXBuildFile; fileRef = 3816A8C0290024A8005DA4A7 /* GoClock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		386AF3B4290BFA97009CDE32 /* ConcreteSideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3AD290BFA97009CDE32 /* ConcreteSideTests.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380A438E290C06B00056EF00 /* MockSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSide.swift; sourceTree = "<group>"; };
 		3816A8BD290024A8005DA4A7 /* GoClock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoClock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3816A8C0290024A8005DA4A7 /* GoClock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoClock.h; sourceTree = "<group>"; };
 		3816A8C5290024A9005DA4A7 /* GoClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				386AF3B1290BFA97009CDE32 /* MockTimer.swift */,
+				380A438E290C06B00056EF00 /* MockSide.swift */,
 				386AF3B2290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift */,
 			);
 			path = "Test Helpers";
@@ -237,6 +240,7 @@
 			files = (
 				386AF3B4290BFA97009CDE32 /* ConcreteSideTests.swift in Sources */,
 				386AF3B9290BFA97009CDE32 /* GoClockIntegrationTests.swift in Sources */,
+				380A438F290C06B00056EF00 /* MockSide.swift in Sources */,
 				386AF3B7290BFA97009CDE32 /* MockTimer.swift in Sources */,
 				386AF3B6290BFA97009CDE32 /* GoClockTests.swift in Sources */,
 				386AF3B8290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift in Sources */,
