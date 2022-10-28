@@ -1,37 +1,62 @@
 ///
-/// Created by Zheng Kanyan on 2022/10/24.
+/// Created by Zheng Kanyan on 2022/10/28.
 /// 
 ///
 
 import Foundation
 
-public struct Side: Equatable {
+protocol Side {
+    var remainingSeconds: UInt { get }
     
-    public init(remainingSeconds: UInt, updatedBlock: @escaping () -> Void) {
-        self.remainingSeconds = remainingSeconds
-        self.remainingSecondsInDouble = Double(remainingSeconds)
-        if remainingSeconds == 0 {
-            timedOut = true
+    func setUpdatedClosure(_ updated: @escaping () -> Void)
+    
+    func start()
+    func stop()
+}
+
+class ConcreteSide: Side, Equatable {
+    
+    private let timer: GoTimer
+    var remainingSeconds: UInt {
+        let seconds = floor(remainingTime)
+        return remainingTime - seconds < DefaultInterval / 2 ? UInt(seconds) : UInt(seconds) + 1
+    }
+    private var remainingTime: TimeInterval
+    private var updated: (() -> Void)?
+    
+    init(totalSeconds: UInt, timer: GoTimer) {
+        self.timer = timer
+        self.remainingTime = Double(totalSeconds)
+        timer.setTickedClosure { [weak self] interval in
+            guard let self = self else { return }
+            self.remainingTime -= interval
+            print("Time: \(self.remainingTime), Seconds: \(self.remainingSeconds)")
+            if abs(self.remainingTime - Double(self.remainingSeconds)) < DefaultInterval / 2 {
+                print("===== It's Time to Update")
+                if self.remainingSeconds == 0 {
+                    self.timer.invalidate()
+                }
+                self.updated?()
+            }
         }
-        
-        self.updatedBlock = updatedBlock
     }
     
-    public var remainingSeconds: UInt
-    private let updatedBlock: () -> Void
-    private var remainingSecondsInDouble: Double
-    private var timedOut = false
-    
-    public func start() {
-        
+    func setUpdatedClosure(_ updated: @escaping () -> Void) {
+        self.updated = updated
     }
     
-    public func stop() {
-        
+    func start() {
+        guard remainingSeconds > 0 || abs(remainingTime - Double(remainingSeconds)) > DefaultInterval / 2 else {
+            return
+        }
+        timer.fire()
     }
     
-    public static func == (lhs: Side, rhs: Side) -> Bool {
-        lhs.timedOut == rhs.timedOut
-        && lhs.remainingSecondsInDouble == lhs.remainingSecondsInDouble
+    func stop() {
+        timer.invalidate()
+    }
+    
+    static func == (lhs: ConcreteSide, rhs: ConcreteSide) -> Bool {
+        lhs.remainingTime == rhs.remainingTime
     }
 }
