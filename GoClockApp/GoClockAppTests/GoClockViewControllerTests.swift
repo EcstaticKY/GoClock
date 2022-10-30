@@ -13,29 +13,39 @@ final class GoClockViewController: UIViewController {
     convenience init(clock: GoClock) {
         self.init()
         self.clock = clock
+        clock.setUpdatedClosure { [weak self] in
+            self?.setUpView()
+        }
     }
     
     var hostSideView: SideView!
     var guestSideView: SideView!
     
     override func viewDidLoad() {
-        guard let clock = clock else { return }
-        hostSideView = SideView(remainingSeconds: clock.sides[0].remainingSeconds)
-        guestSideView = SideView(remainingSeconds: clock.sides[1].remainingSeconds)
+        setUpView()
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
         hostSideView.addGestureRecognizer(tapRecognizer)
         guestSideView.addGestureRecognizer(tapRecognizer)
     }
     
+    func setUpView() {
+        guard let clock = clock else { return }
+        hostSideView = SideView(remainingSeconds: clock.sides[0].remainingSeconds)
+        guestSideView = SideView(remainingSeconds: clock.sides[1].remainingSeconds)
+    }
+    
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-        guard let sender = sender else { return }
-        if sender.view == hostSideView {
-            guard clock?.currentRunningIndex == 0 else { return }
-        } else {
-            guard clock?.currentRunningIndex == 1 else { return }
+        guard let sender = sender, let clock = clock else { return }
+        guard clock.sides.filter({ $0.remainingSeconds == 0 }).isEmpty else {
+            return
         }
-        clock?.switchSide()
+        if sender.view == hostSideView {
+            guard clock.currentRunningIndex == 0 else { return }
+        } else {
+            guard clock.currentRunningIndex == 1 else { return }
+        }
+        clock.switchSide()
     }
 }
 
@@ -85,6 +95,36 @@ final class GoClockViewControllerTests: XCTestCase {
         XCTAssertEqual(clock.switchSideCount, 1)
     }
     
+    func test_clockRunning_clockUpdatedWhenSecondsPasses() {
+        let (sut, clock) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        sut.tapGuestSideView()
+        clock.callsUpdated()
+        
+        XCTAssertEqual(sut.hostTime, 1)
+        
+        sut.tapHostSideView()
+        clock.callsUpdated()
+        
+        XCTAssertEqual(sut.guestTime, 1)
+    }
+    
+    func test_tapsSideView_doesNotCallSwitchSideOnClock_whenOneSideRemainingTimeIsZero() {
+        let (sut, clock) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        sut.tapGuestSideView()
+        clock.callsUpdated()
+        clock.callsUpdated()
+        
+        XCTAssertEqual(sut.hostTime, 0)
+        
+        sut.tapHostSideView()
+        
+        XCTAssertEqual(clock.switchSideCount, 1)
+    }
+    
     // MARK: -- Helpers
     
     private func makeSUT() -> (sut: GoClockViewController, clock: MockGoClock) {
@@ -107,6 +147,11 @@ final class GoClockViewControllerTests: XCTestCase {
         override func switchSide() {
             switchSideCount += 1
             super.switchSide()
+        }
+        
+        func callsUpdated() {
+            (sides[currentRunningIndex] as! MockSide).callsUpdated()
+            updated?()
         }
     }
 }
