@@ -22,6 +22,18 @@ final class GoClockViewController: UIViewController {
         guard let clock = clock else { return }
         hostSideView = SideView(remainingSeconds: clock.sides[0].remainingSeconds)
         guestSideView = SideView(remainingSeconds: clock.sides[1].remainingSeconds)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
+        hostSideView.addGestureRecognizer(tapRecognizer)
+        guestSideView.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        guard let sender = sender else { return }
+        if sender.view == hostSideView {
+            guard
+        }
+        clock?.switchSide()
     }
 }
 
@@ -38,7 +50,7 @@ final class SideView: UIView {
 final class GoClockViewControllerTests: XCTestCase {
 
     func test_showsClockTimeOnDisplay() {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         
         sut.loadViewIfNeeded()
         
@@ -46,9 +58,20 @@ final class GoClockViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.guestTime, 2)
     }
     
+    func test_tapsWaitingSideView_callsSwitchSideOnClock() {
+        let (sut, clock) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        sut.tapHostSideView()
+        XCTAssertEqual(clock.switchSideCount, 1)
+        
+        sut.tapHostSideView()
+        XCTAssertEqual(clock.switchSideCount, 1)
+    }
+    
     // MARK: -- Helpers
     
-    private func makeSUT() -> GoClockViewController {
+    private func makeSUT() -> (sut: GoClockViewController, clock: MockGoClock) {
         let side0 = MockSide(remainingSeconds: 2)
         let side1 = MockSide(remainingSeconds: 2)
         let clock = MockGoClock(sides: [side0, side1])
@@ -59,11 +82,15 @@ final class GoClockViewControllerTests: XCTestCase {
         trackForMemoryLeaks(clock)
         trackForMemoryLeaks(sut)
         
-        return sut
+        return (sut, clock)
     }
     
     private class MockGoClock: GoClock {
+        var switchSideCount = 0
         
+        override func switchSide() {
+            switchSideCount += 1
+        }
     }
 }
 
@@ -74,5 +101,12 @@ extension GoClockViewController {
     
     var guestTime: UInt {
         UInt(guestSideView.timeLabel.text!)!
+    }
+    
+    func tapHostSideView() {
+        hostSideView.gestureRecognizers?.removeAll()
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
+        hostSideView.addGestureRecognizer(tapRecognizer)
+        handleTap(tapRecognizer)
     }
 }

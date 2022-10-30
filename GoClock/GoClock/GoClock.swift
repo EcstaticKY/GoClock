@@ -7,14 +7,14 @@ import Foundation
 
 public class GoClock {
     public let sides: [Side]
-    var currentWaitingIndex = 0
+    var currentRunningIndex = 1
     var updated: (() -> Void)?
     
     public init(sides: [Side]) {
         self.sides = sides
         sides.enumerated().forEach { (index, side) in
             side.setUpdatedClosure { [weak self] in
-                guard let self = self, self.currentWaitingIndex != index else {
+                guard let self = self, self.currentRunningIndex == index else {
                     return
                 }
                 
@@ -28,8 +28,8 @@ public class GoClock {
     }
     
     public func switchSide() {
-        sides[currentWaitingIndex].start()
-        currentWaitingIndex = currentWaitingIndex == 0 ? 1 : 0
-        sides[currentWaitingIndex].stop()
+        sides[currentRunningIndex].stop()
+        currentRunningIndex = currentRunningIndex == 0 ? 1 : 0
+        sides[currentRunningIndex].start()
     }
 }

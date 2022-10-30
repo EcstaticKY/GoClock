@@ -17,18 +17,18 @@ final class GoClockTests: XCTestCase {
         XCTAssertEqual(sut.sides[1].remainingSeconds, DefaultTotalSeconds)
     }
     
-    func test_switchSide_switchCurrentWaitingIndexFromZeroToOne() {
+    func test_switchSide_switchCurrentTappingIndexFromOneToZero() {
         let sut = makeSUT()
-        XCTAssertEqual(sut.currentWaitingIndex, 0)
+        XCTAssertEqual(sut.currentRunningIndex, 1)
         
         sut.switchSide()
-        XCTAssertEqual(sut.currentWaitingIndex, 1)
+        XCTAssertEqual(sut.currentRunningIndex, 0)
         
         sut.switchSide()
-        XCTAssertEqual(sut.currentWaitingIndex, 0)
+        XCTAssertEqual(sut.currentRunningIndex, 1)
     }
     
-    func test_switchSide_callsStartOnCurrentWaitingSideAndCallsStopOnAnotherSide() {
+    func test_switchSide_callsStopOnCurrentTappingSideAndCallsStartOnAnotherSide() {
         let sut = makeSUT()
         
         sut.switchSide()
