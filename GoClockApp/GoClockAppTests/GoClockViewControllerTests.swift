@@ -31,7 +31,9 @@ final class GoClockViewController: UIViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         guard let sender = sender else { return }
         if sender.view == hostSideView {
-            guard
+            guard clock?.currentRunningIndex == 0 else { return }
+        } else {
+            guard clock?.currentRunningIndex == 1 else { return }
         }
         clock?.switchSide()
     }
@@ -58,14 +60,28 @@ final class GoClockViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.guestTime, 2)
     }
     
-    func test_tapsWaitingSideView_callsSwitchSideOnClock() {
+    func test_tapsRunningSideView_callsSwitchSideOnClock() {
+        let (sut, clock) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        sut.tapGuestSideView()
+        XCTAssertEqual(clock.switchSideCount, 1)
+        
+        sut.tapHostSideView()
+        XCTAssertEqual(clock.switchSideCount, 2)
+    }
+    
+    func test_tapsNotRunningSideView_doesNotCallSwitchSideOnClock() {
         let (sut, clock) = makeSUT()
         sut.loadViewIfNeeded()
         
         sut.tapHostSideView()
+        XCTAssertEqual(clock.switchSideCount, 0)
+        
+        sut.tapGuestSideView()
         XCTAssertEqual(clock.switchSideCount, 1)
         
-        sut.tapHostSideView()
+        sut.tapGuestSideView()
         XCTAssertEqual(clock.switchSideCount, 1)
     }
     
@@ -90,6 +106,7 @@ final class GoClockViewControllerTests: XCTestCase {
         
         override func switchSide() {
             switchSideCount += 1
+            super.switchSide()
         }
     }
 }
@@ -107,6 +124,13 @@ extension GoClockViewController {
         hostSideView.gestureRecognizers?.removeAll()
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
         hostSideView.addGestureRecognizer(tapRecognizer)
+        handleTap(tapRecognizer)
+    }
+    
+    func tapGuestSideView() {
+        guestSideView.gestureRecognizers?.removeAll()
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
+        guestSideView.addGestureRecognizer(tapRecognizer)
         handleTap(tapRecognizer)
     }
 }
