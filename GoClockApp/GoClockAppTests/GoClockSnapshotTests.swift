@@ -10,12 +10,12 @@ let DefaultTotalSeconds: UInt = 30
 
 final class GoClockSnapshotTests: XCTestCase {
 
-    func testExample() throws {
+    func test_defaultClock() throws {
         let (sut, _) = makeSUT()
         
         sut.loadViewIfNeeded()
         
-        record(snapshot: sut.snapshot(), named: "DEFAULT_CLOCK")
+        assert(snapshot: sut.snapshot(), named: "DEFAULT_CLOCK")
     }
 
     // MARK: -- Helpers
@@ -51,6 +51,32 @@ final class GoClockSnapshotTests: XCTestCase {
             try data.write(to: snapshotURL)
         } catch {
             XCTFail("Failed to save snapshots with error: \(error)", file: file, line: line)
+        }
+    }
+    
+    private func assert(snapshot: UIImage, named name: String,
+                        file: StaticString = #filePath, line: UInt = #line) {
+        guard let data = snapshot.pngData() else {
+            XCTFail("Could not generate png data of snapshot", file: file, line: line)
+            return
+        }
+        
+        let snapshotURL = URL(fileURLWithPath: String(describing: file))
+            .deletingLastPathComponent()
+            .appendingPathComponent("snapshots")
+            .appendingPathComponent("\(name).png")
+        
+        guard let storedData = try? Data(contentsOf: snapshotURL) else {
+            XCTFail("Failed to load stored snapshot at URL: \(snapshotURL). Use the 'record' method before asserting", file: file, line: line)
+            return
+        }
+        
+        if data != storedData {
+            let temporarySnapshotURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(snapshotURL.lastPathComponent)
+            
+            try? data.write(to: temporarySnapshotURL)
+            
+            XCTFail("New snapshot does not match stored snapshot. New snapshot URL: \(temporarySnapshotURL). Stored snapshot URL: \(snapshotURL)", file: file, line: line)
         }
     }
 }
