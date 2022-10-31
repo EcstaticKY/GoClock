@@ -22,6 +22,7 @@ final class GoClockViewController: UIViewController {
     
     override func viewDidLoad() {
         setUpView()
+        setUpConstraints()
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
         hostSideView.addGestureRecognizer(tapRecognizer)
@@ -30,8 +31,32 @@ final class GoClockViewController: UIViewController {
     
     func setUpView() {
         guard let clock = clock else { return }
-        hostSideView = SideView(remainingSeconds: clock.sides[0].remainingSeconds)
-        guestSideView = SideView(remainingSeconds: clock.sides[1].remainingSeconds)
+        
+        view.backgroundColor = .cyan
+        
+        hostSideView = SideView(remainingSeconds: clock.sides[0].remainingSeconds, isHostSide: true)
+        hostSideView.backgroundColor = .black
+        hostSideView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hostSideView)
+        
+        guestSideView = SideView(remainingSeconds: clock.sides[1].remainingSeconds, isHostSide: false)
+        guestSideView.backgroundColor = .white
+        guestSideView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(guestSideView)
+    }
+    
+    func setUpConstraints() {
+        NSLayoutConstraint.activate([
+            hostSideView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostSideView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostSideView.topAnchor.constraint(equalTo: view.topAnchor),
+            hostSideView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
+            
+            guestSideView.topAnchor.constraint(equalTo: hostSideView.bottomAnchor),
+            guestSideView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            guestSideView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            guestSideView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {

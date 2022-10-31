@@ -88,20 +88,6 @@ final class GoClockViewControllerTests: XCTestCase {
         
         return (sut, clock)
     }
-    
-    private class MockGoClock: GoClock {
-        var switchSideCount = 0
-        
-        override func switchSide() {
-            switchSideCount += 1
-            super.switchSide()
-        }
-        
-        func callsUpdated() {
-            (sides[currentRunningIndex] as! MockSide).callsUpdated()
-            updated?()
-        }
-    }
 }
 
 extension GoClockViewController {
