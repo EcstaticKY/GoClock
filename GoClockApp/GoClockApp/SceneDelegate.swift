@@ -4,6 +4,7 @@
 ///
 
 import UIKit
+import GoClock
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -15,7 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ViewController()
+        
+        let side0 = ConcreteSide(totalSeconds: 30, timer: GoTimer())
+        let side1 = ConcreteSide(totalSeconds: 30, timer: GoTimer())
+        let clock = GoClock(sides: [side0, side1])
+        window.rootViewController = GoClockViewController(clock: clock)
+        
         self.window = window
         window.makeKeyAndVisible()
     }

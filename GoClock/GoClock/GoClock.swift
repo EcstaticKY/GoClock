@@ -7,7 +7,7 @@ import Foundation
 
 public class GoClock {
     public let sides: [Side]
-    var currentRunningIndex = 1
+    public var currentRunningIndex = 1
     var updated: (() -> Void)?
     
     public init(sides: [Side]) {
