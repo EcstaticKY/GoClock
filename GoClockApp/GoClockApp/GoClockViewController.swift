@@ -8,40 +8,25 @@ import GoClock
 
 final class GoClockViewController: UIViewController {
     private var clock: GoClock?
+    private var hostSideBottomConstraint: NSLayoutConstraint?
     
     convenience init(clock: GoClock) {
         self.init()
         self.clock = clock
         clock.setUpdatedClosure { [weak self] in
-            self?.setUpView()
+            self?.updateSides()
         }
     }
-    
-    var hostSideView: SideView!
-    var guestSideView: SideView!
     
     override func viewDidLoad() {
         setUpView()
         setUpConstraints()
-        
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
-        hostSideView.addGestureRecognizer(tapRecognizer)
-        guestSideView.addGestureRecognizer(tapRecognizer)
     }
     
     func setUpView() {
-        guard let clock = clock else { return }
+        guard let _ = clock else { return }
         
-        view.backgroundColor = .cyan
-        
-        hostSideView = SideView(remainingSeconds: clock.sides[0].remainingSeconds, isHostSide: true)
-        hostSideView.backgroundColor = .black
-        hostSideView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hostSideView)
-        
-        guestSideView = SideView(remainingSeconds: clock.sides[1].remainingSeconds, isHostSide: false)
-        guestSideView.backgroundColor = .white
-        guestSideView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(guestSideView)
     }
     
@@ -50,13 +35,31 @@ final class GoClockViewController: UIViewController {
             hostSideView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostSideView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             hostSideView.topAnchor.constraint(equalTo: view.topAnchor),
-            hostSideView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
             
             guestSideView.topAnchor.constraint(equalTo: hostSideView.bottomAnchor),
             guestSideView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             guestSideView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             guestSideView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        
+        hostSideBottomConstraint = NSLayoutConstraint(item: hostSideView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.25, constant: 0)
+        hostSideBottomConstraint?.isActive = true
+    }
+    
+    private func updateSides() {
+        guard let clock = clock else { return }
+        
+        hostSideView.timeLabel.text = "\(clock.sides[0].remainingSeconds)"
+        guestSideView.timeLabel.text = "\(clock.sides[1].remainingSeconds)"
+        
+//        hostSideBottomConstraint?.isActive = false
+//        
+//        if clock.currentRunningIndex == 0 {
+//            hostSideBottomConstraint = NSLayoutConstraint(item: hostSideView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.75, constant: 0)
+//        } else {
+//            hostSideBottomConstraint = NSLayoutConstraint(item: hostSideView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.25, constant: 0)
+//        }
+//        hostSideBottomConstraint?.isActive = true
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -71,5 +74,27 @@ final class GoClockViewController: UIViewController {
         }
         clock.switchSide()
     }
+    
+    lazy var hostSideView: SideView = ({
+        let view = SideView(remainingSeconds: clock!.sides[0].remainingSeconds, isHostSide: true)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
+        view.addGestureRecognizer(tapRecognizer)
+        
+        return view
+    })()
+    
+    lazy var guestSideView: SideView = ({
+        let view = SideView(remainingSeconds: clock!.sides[1].remainingSeconds, isHostSide: false)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_ :)))
+        view.addGestureRecognizer(tapRecognizer)
+        
+        return view
+    })()
 }
 

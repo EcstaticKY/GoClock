@@ -15,7 +15,26 @@ final class GoClockSnapshotTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         
-        assert(snapshot: sut.snapshot(), named: "DEFAULT_CLOCK")
+        record(snapshot: sut.snapshot(), named: "DEFAULT_CLOCK")
+    }
+    
+    func test_clockWithHostSideRunning() {
+        let (sut, _) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        sut.tapGuestSideView()
+        
+        record(snapshot: sut.snapshot(), named: "HOST_SIDE_RUNNING")
+    }
+    
+    func test_clockWithGuestSideRunning() {
+        let (sut, _) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        sut.tapGuestSideView()
+        sut.tapHostSideView()
+        
+        record(snapshot: sut.snapshot(), named: "GUEST_SIDE_RUNNING")
     }
 
     // MARK: -- Helpers
