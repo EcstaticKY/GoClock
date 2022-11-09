@@ -10,6 +10,7 @@ final class GoTimerTests: XCTestCase {
     
     override func setUp() {
         MockTimer.currentTimers.removeAll()
+        MockTimer.messages.removeAll()
     }
 
     func test_fire_shouldCallTimeUpdatedBlockWhenTimerTicking() {
@@ -28,28 +29,31 @@ final class GoTimerTests: XCTestCase {
         let (sut, _) = makeSUT()
 
         sut.fire()
-        XCTAssertEqual(MockTimer.currentTimers[0].messages, [.fire])
+        XCTAssertEqual(MockTimer.messages, [.fire])
 
         sut.invalidate()
-        XCTAssertEqual(MockTimer.currentTimers[0].messages, [.fire, .invalidate])
+        XCTAssertEqual(MockTimer.messages, [.fire, .invalidate])
+        
+        sut.fire()
+        XCTAssertEqual(MockTimer.messages, [.fire, .invalidate, .fire])
     }
 
     func test_twoTimers_wouldNotInterfereEachOther() {
         let (sut0, _) = makeSUT()
         sut0.fire()
+        
+        XCTAssertEqual(MockTimer.messages, [.fire])
+        
         let (sut1, _) = makeSUT()
         sut1.fire()
 
-        XCTAssertEqual(MockTimer.currentTimers[0].messages, [.fire])
-        XCTAssertEqual(MockTimer.currentTimers[1].messages, [.fire])
+        XCTAssertEqual(MockTimer.messages, [.fire, .fire])
 
         sut1.invalidate()
-        XCTAssertEqual(MockTimer.currentTimers[1].messages, [.fire, .invalidate])
-        XCTAssertEqual(MockTimer.currentTimers[0].messages, [.fire])
+        XCTAssertEqual(MockTimer.messages, [.fire, .fire, .invalidate])
 
         sut0.invalidate()
-        XCTAssertEqual(MockTimer.currentTimers[0].messages, [.fire, .invalidate])
-        XCTAssertEqual(MockTimer.currentTimers[1].messages, [.fire, .invalidate])
+        XCTAssertEqual(MockTimer.messages, [.fire, .fire, .invalidate, .invalidate])
     }
 
     func test_twoTimers_shouldCallCorrectTimeUpdatedBlockWhenTimerTicking() {

@@ -13,7 +13,7 @@ class MockTimer: Timer {
     }
     
     var block: ((Timer) -> Void)!
-    var messages: [Message]!
+    static var messages = [Message]()
     
     static var currentTimers = [MockTimer]()
     
@@ -23,10 +23,7 @@ class MockTimer: Timer {
         let mockTimer = MockTimer()
         mockTimer.block = block
         
-        /** Timer is bridged objective-c NSObject kind class, so it's initialization have to follow objective-c rules, and in that world only primitive type properties got default values, array is not primitive for objective-c, so skipped, thus corresponding property was uninitialised - accessing not initialised property in run-time result in crash.
-         from: https://stackoverflow.com/questions/41755791/how-can-i-unit-test-swift-timer-controller
-         */
-        mockTimer.messages = [.fire]
+        MockTimer.messages.append(.fire)
         MockTimer.currentTimers.append(mockTimer)
         
         return mockTimer
@@ -36,11 +33,9 @@ class MockTimer: Timer {
         currentTimers[index].block(currentTimers[index])
     }
     
-    override func fire() {
-        messages.append(.fire)
-    }
+    override func fire() { }
     
     override func invalidate() {
-        messages.append(.invalidate)
+        MockTimer.messages.append(.invalidate)
     }
 }

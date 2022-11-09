@@ -23,13 +23,9 @@ public class GoTimer {
     }
     
     func fire() {
-        if let timer = timer {
-            timer.fire()
-        } else {
-            timer = timeProvider.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-                guard let self = self else { return }
-                self.ticked?(self.interval)
-            }
+        timer = timeProvider.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.ticked?(self.interval)
         }
     }
     

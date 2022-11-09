@@ -52,14 +52,14 @@ final class GoClockViewController: UIViewController {
         hostSideView.timeLabel.text = "\(clock.sides[0].remainingSeconds)"
         guestSideView.timeLabel.text = "\(clock.sides[1].remainingSeconds)"
         
-//        hostSideBottomConstraint?.isActive = false
-//        
-//        if clock.currentRunningIndex == 0 {
-//            hostSideBottomConstraint = NSLayoutConstraint(item: hostSideView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.75, constant: 0)
-//        } else {
-//            hostSideBottomConstraint = NSLayoutConstraint(item: hostSideView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.25, constant: 0)
-//        }
-//        hostSideBottomConstraint?.isActive = true
+        hostSideBottomConstraint?.isActive = false
+        
+        if clock.currentRunningIndex == 0 {
+            hostSideBottomConstraint = NSLayoutConstraint(item: hostSideView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.75, constant: 0)
+        } else {
+            hostSideBottomConstraint = NSLayoutConstraint(item: hostSideView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.25, constant: 0)
+        }
+        hostSideBottomConstraint?.isActive = true
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {

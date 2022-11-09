@@ -7,6 +7,7 @@ import XCTest
 @testable import GoClock
 
 final class GoClockIntegrationTests: XCTestCase {
+    
     func test_GoClockInstanceCallsUpdatedWhenTimerTickingOneSecond() {
         let sut = makeSUT()
 
