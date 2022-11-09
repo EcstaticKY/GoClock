@@ -26,6 +26,9 @@ final class GoClockTests: XCTestCase {
         
         sut.switchSide()
         XCTAssertEqual(sut.currentRunningIndex, 1)
+        
+        sut.switchSide()
+        XCTAssertEqual(sut.currentRunningIndex, 0)
     }
     
     func test_switchSide_callsStopOnCurrentTappingSideAndCallsStartOnAnotherSide() {
@@ -38,6 +41,10 @@ final class GoClockTests: XCTestCase {
         sut.switchSide()
         XCTAssertEqual((sut.sides[0] as! MockSide).messages, [.start, .stop])
         XCTAssertEqual((sut.sides[1] as! MockSide).messages, [.stop, .start])
+        
+        sut.switchSide()
+        XCTAssertEqual((sut.sides[0] as! MockSide).messages, [.start, .stop, .start])
+        XCTAssertEqual((sut.sides[1] as! MockSide).messages, [.stop, .start, .stop])
     }
     
     func test_switchSide_callsUpdatedBlockWhenSideFoundItsRemainingSecondsUpdated() {
