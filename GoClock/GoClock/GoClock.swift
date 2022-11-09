@@ -31,5 +31,7 @@ public class GoClock {
         sides[currentRunningIndex].stop()
         currentRunningIndex = currentRunningIndex == 0 ? 1 : 0
         sides[currentRunningIndex].start()
+        
+        updated?()
     }
 }

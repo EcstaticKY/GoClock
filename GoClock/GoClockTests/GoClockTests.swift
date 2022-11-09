@@ -62,7 +62,7 @@ final class GoClockTests: XCTestCase {
         (sut.sides[1] as! MockSide).callsUpdated()
         (sut.sides[0] as! MockSide).callsUpdated()
         
-        XCTAssertEqual(updatedCount, 2)
+        XCTAssertEqual(updatedCount, 4)
     }
     
     // MARK: -- Helpers
