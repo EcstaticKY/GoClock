@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		380A438B290C02860056EF00 /* GoClock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380A438A290C02860056EF00 /* GoClock.framework */; };
-		380A438C290C02860056EF00 /* GoClock.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 380A438A290C02860056EF00 /* GoClock.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		380A438C290C02860056EF00 /* GoClock.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 380A438A290C02860056EF00 /* GoClock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		380A4391290C07580056EF00 /* MockSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A4390290C07580056EF00 /* MockSide.swift */; };
 		380A4393290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A4392290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift */; };
 		380A4395290F9F3A0056EF00 /* SideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A4394290F9F3A0056EF00 /* SideView.swift */; };
@@ -194,7 +194,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					386AF3CA290BFBF6009CDE32 = {
 						CreatedOnToolsVersion = 14.0;
