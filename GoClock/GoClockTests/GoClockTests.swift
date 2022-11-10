@@ -6,8 +6,6 @@
 import XCTest
 @testable import GoClock
 
-let DefaultTotalSeconds: UInt = 30
-
 final class GoClockTests: XCTestCase {
     func test_createsTwoSidesCorrectlyOnCreate() {
         let sut = makeSUT()
