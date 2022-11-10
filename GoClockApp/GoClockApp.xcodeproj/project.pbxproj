@@ -20,6 +20,7 @@
 		386AF3D8290BFBF8009CDE32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386AF3D7290BFBF8009CDE32 /* Assets.xcassets */; };
 		386AF3DB290BFBF8009CDE32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 386AF3D9290BFBF8009CDE32 /* LaunchScreen.storyboard */; };
 		386AF3E6290BFBF8009CDE32 /* GoClockViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3E5290BFBF8009CDE32 /* GoClockViewControllerTests.swift */; };
+		38F14557291C9BB200D0B1EE /* snapshots in Resources */ = {isa = PBXBuildFile; fileRef = 38F14556291C9BB200D0B1EE /* snapshots */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		386AF3DC290BFBF8009CDE32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		386AF3E1290BFBF8009CDE32 /* GoClockAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoClockAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		386AF3E5290BFBF8009CDE32 /* GoClockViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockViewControllerTests.swift; sourceTree = "<group>"; };
+		38F14556291C9BB200D0B1EE /* snapshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = snapshots; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,9 +139,10 @@
 		386AF3E4290BFBF8009CDE32 /* GoClockAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				380A4398290FA05D0056EF00 /* Test Helpers */,
 				386AF3E5290BFBF8009CDE32 /* GoClockViewControllerTests.swift */,
 				380A4396290F9F980056EF00 /* GoClockSnapshotTests.swift */,
+				380A4398290FA05D0056EF00 /* Test Helpers */,
+				38F14556291C9BB200D0B1EE /* snapshots */,
 			);
 			path = GoClockAppTests;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38F14557291C9BB200D0B1EE /* snapshots in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
