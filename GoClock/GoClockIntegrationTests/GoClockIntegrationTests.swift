@@ -31,14 +31,14 @@ final class GoClockIntegrationTests: XCTestCase {
         
         wait(for: [exp], timeout: 3.3)
 
-        XCTAssertEqual((sut.sides[0] as! ConcreteSide).remainingSeconds, 28)
-        XCTAssertEqual((sut.sides[1] as! ConcreteSide).remainingSeconds, 29)
+        XCTAssertEqual((sut.sides[0] as! ConcreteSide).remainingTime.freeTimeSeconds, 28)
+        XCTAssertEqual((sut.sides[1] as! ConcreteSide).remainingTime.freeTimeSeconds, 29)
     }
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> GoClock {
 
-        let side0 = ConcreteSide(totalSeconds: DefaultTotalSeconds, timer: GoTimer())
-        let side1 = ConcreteSide(totalSeconds: DefaultTotalSeconds, timer: GoTimer())
+        let side0 = ConcreteSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2), timer: GoTimer())
+        let side1 = ConcreteSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2), timer: GoTimer())
         let sut = GoClock(sides: [side0, side1])
 
         trackForMemoryLeaks(sut)

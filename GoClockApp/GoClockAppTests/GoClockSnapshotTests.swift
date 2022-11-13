@@ -4,6 +4,7 @@
 ///
 
 import XCTest
+import GoClock
 @testable import GoClockApp
 
 let DefaultTotalSeconds: UInt = 30
@@ -40,8 +41,8 @@ final class GoClockSnapshotTests: XCTestCase {
     // MARK: -- Helpers
 
     private func makeSUT() -> (sut: GoClockViewController, clock: MockGoClock) {
-        let side0 = MockSide(remainingSeconds: DefaultTotalSeconds)
-        let side1 = MockSide(remainingSeconds: DefaultTotalSeconds)
+        let side0 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2))
+        let side1 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2))
         let clock = MockGoClock(sides: [side0, side1])
         let sut = GoClockViewController(clock: clock)
         

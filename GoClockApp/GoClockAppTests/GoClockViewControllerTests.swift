@@ -76,8 +76,8 @@ final class GoClockViewControllerTests: XCTestCase {
     // MARK: -- Helpers
     
     private func makeSUT() -> (sut: GoClockViewController, clock: MockGoClock) {
-        let side0 = MockSide(remainingSeconds: 2)
-        let side1 = MockSide(remainingSeconds: 2)
+        let side0 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: 2, countDownSeconds: 2, countDownTimes: 2))
+        let side1 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: 2, countDownSeconds: 2, countDownTimes: 2))
         let clock = MockGoClock(sides: [side0, side1])
         let sut = GoClockViewController(clock: clock)
         

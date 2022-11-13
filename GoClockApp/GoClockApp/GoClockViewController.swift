@@ -49,8 +49,8 @@ final class GoClockViewController: UIViewController {
     private func updateSides() {
         guard let clock = clock else { return }
         
-        hostSideView.timeLabel.text = "\(clock.sides[0].remainingSeconds)"
-        guestSideView.timeLabel.text = "\(clock.sides[1].remainingSeconds)"
+        hostSideView.timeLabel.text = "\(clock.sides[0].remainingTime.freeTimeSeconds)"
+        guestSideView.timeLabel.text = "\(clock.sides[1].remainingTime.freeTimeSeconds)"
         
         hostSideBottomConstraint?.isActive = false
         
@@ -64,7 +64,7 @@ final class GoClockViewController: UIViewController {
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         guard let sender = sender, let clock = clock else { return }
-        guard clock.sides.filter({ $0.remainingSeconds == 0 }).isEmpty else {
+        guard clock.sides.filter({ $0.remainingTime.freeTimeSeconds == 0 }).isEmpty else {
             return
         }
         if sender.view == hostSideView {
@@ -76,7 +76,7 @@ final class GoClockViewController: UIViewController {
     }
     
     lazy var hostSideView: SideView = ({
-        let view = SideView(remainingSeconds: clock!.sides[0].remainingSeconds, isHostSide: true)
+        let view = SideView(remainingSeconds: clock!.sides[0].remainingTime.freeTimeSeconds, isHostSide: true)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .black
         
@@ -87,7 +87,7 @@ final class GoClockViewController: UIViewController {
     })()
     
     lazy var guestSideView: SideView = ({
-        let view = SideView(remainingSeconds: clock!.sides[1].remainingSeconds, isHostSide: false)
+        let view = SideView(remainingSeconds: clock!.sides[1].remainingTime.freeTimeSeconds, isHostSide: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         

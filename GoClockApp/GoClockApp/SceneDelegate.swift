@@ -17,8 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        let side0 = ConcreteSide(totalSeconds: 30, timer: GoTimer())
-        let side1 = ConcreteSide(totalSeconds: 30, timer: GoTimer())
+        let side0 = ConcreteSide(timeSetting: TimeSetting(freeTimeSeconds: 30, countDownSeconds: 2, countDownTimes: 2), timer: GoTimer())
+        let side1 = ConcreteSide(timeSetting: TimeSetting(freeTimeSeconds: 30, countDownSeconds: 2, countDownTimes: 2), timer: GoTimer())
         let clock = GoClock(sides: [side0, side1])
         window.rootViewController = GoClockViewController(clock: clock)
         

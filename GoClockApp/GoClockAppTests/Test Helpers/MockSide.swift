@@ -7,16 +7,26 @@ import Foundation
 import GoClock
 
 class MockSide: Side {
+    var timeSetting: TimeSetting
+    
+    var remainingTime: (freeTimeSeconds: UInt, countDownTimes: UInt) {
+        (UInt(remainingFreeTime), remainingCountDownTimes)
+    }
+    
+    private var remainingFreeTime: TimeInterval
+    private var remainingCountDownTimes: UInt
+    
     enum Message {
     case start, stop
     }
     
-    var remainingSeconds: UInt
     var messages = [Message]()
     var updated: (() -> Void)?
     
-    init(remainingSeconds: UInt) {
-        self.remainingSeconds = remainingSeconds
+    init(timeSetting: TimeSetting) {
+        self.timeSetting = timeSetting
+        remainingFreeTime = TimeInterval(timeSetting.freeTimeSeconds)
+        remainingCountDownTimes = timeSetting.countDownTimes
     }
     
     func setUpdatedClosure(_ updated: @escaping () -> Void) {
@@ -32,7 +42,7 @@ class MockSide: Side {
     }
     
     func callsUpdated() {
-        remainingSeconds -= 1
+        remainingFreeTime -= 1
         updated?()
     }
 }

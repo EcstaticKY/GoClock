@@ -5,8 +5,21 @@
 
 import Foundation
 
+public struct TimeSetting {
+    public init(freeTimeSeconds: UInt, countDownSeconds: UInt, countDownTimes: UInt) {
+        self.freeTimeSeconds = freeTimeSeconds
+        self.countDownSeconds = countDownSeconds
+        self.countDownTimes = countDownTimes
+    }
+    
+    public let freeTimeSeconds: UInt
+    public let countDownSeconds: UInt
+    public let countDownTimes: UInt
+}
+
 public protocol Side {
-    var remainingSeconds: UInt { get }
+    var timeSetting: TimeSetting { get }
+    var remainingTime: (freeTimeSeconds: UInt, countDownTimes: UInt) { get }
     
     func setUpdatedClosure(_ updated: @escaping () -> Void)
     
@@ -16,22 +29,30 @@ public protocol Side {
 
 public class ConcreteSide: Side {
     
-    private let timer: GoTimer
-    public var remainingSeconds: UInt {
-        let seconds = floor(remainingTime)
-        return remainingTime - seconds < DefaultInterval / 2 ? UInt(seconds) : UInt(seconds) + 1
+    public let timeSetting: TimeSetting
+    public var remainingTime: (freeTimeSeconds: UInt, countDownTimes: UInt) {
+        let seconds = floor(remainingFreeTime)
+        let freeTimeSeconds = remainingFreeTime - seconds < DefaultInterval / 2 ? UInt(seconds) : UInt(seconds) + 1
+        return (freeTimeSeconds, remainingCountDownTimes)
     }
-    private var remainingTime: TimeInterval
+    
+    private var remainingFreeTime: TimeInterval
+    private var remainingCountDownTimes: UInt
+    
+    private let timer: GoTimer
     private var updated: (() -> Void)?
     
-    public init(totalSeconds: UInt, timer: GoTimer) {
+    public init(timeSetting: TimeSetting, timer: GoTimer) {
         self.timer = timer
-        self.remainingTime = Double(totalSeconds)
+        self.timeSetting = timeSetting
+        remainingFreeTime = TimeInterval(timeSetting.freeTimeSeconds)
+        remainingCountDownTimes = timeSetting.countDownTimes
+        
         timer.setTickedClosure { [weak self] interval in
             guard let self = self else { return }
-            self.remainingTime -= interval
-            if abs(self.remainingTime - Double(self.remainingSeconds)) < DefaultInterval / 2 {
-                if self.remainingSeconds == 0 {
+            self.remainingFreeTime -= interval
+            if abs(self.remainingFreeTime - Double(self.remainingTime.freeTimeSeconds)) < DefaultInterval / 2 {
+                if self.remainingTime.freeTimeSeconds == 0 {
                     self.timer.invalidate()
                 }
                 self.updated?()
@@ -44,7 +65,7 @@ public class ConcreteSide: Side {
     }
     
     public func start() {
-        guard remainingSeconds > 0 || abs(remainingTime - Double(remainingSeconds)) > DefaultInterval / 2 else {
+        guard remainingTime.freeTimeSeconds > 0 || abs(remainingFreeTime - Double(remainingTime.freeTimeSeconds)) > DefaultInterval / 2 else {
             return
         }
         timer.fire()

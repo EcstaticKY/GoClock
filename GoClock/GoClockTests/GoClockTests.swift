@@ -11,8 +11,8 @@ final class GoClockTests: XCTestCase {
         let sut = makeSUT()
         
         XCTAssertEqual(sut.sides.count, 2)
-        XCTAssertEqual(sut.sides[0].remainingSeconds, DefaultTotalSeconds)
-        XCTAssertEqual(sut.sides[1].remainingSeconds, DefaultTotalSeconds)
+        XCTAssertEqual(sut.sides[0].remainingTime.freeTimeSeconds, DefaultTotalSeconds)
+        XCTAssertEqual(sut.sides[1].remainingTime.freeTimeSeconds, DefaultTotalSeconds)
     }
     
     func test_switchSide_switchCurrentTappingIndexFromOneToZero() {
@@ -67,7 +67,7 @@ final class GoClockTests: XCTestCase {
     
     private func makeSUT(clockUpdated: @escaping () -> Void = { },
                          file: StaticString = #filePath, line: UInt = #line) -> GoClock {
-        let sut = GoClock(sides: [MockSide(remainingSeconds: DefaultTotalSeconds), MockSide(remainingSeconds: DefaultTotalSeconds)])
+        let sut = GoClock(sides: [MockSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2)), MockSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2))])
         sut.setUpdatedClosure(clockUpdated)
         
         trackForMemoryLeaks(sut, file: file, line: line)

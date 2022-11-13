@@ -35,12 +35,12 @@ final class ConcreteSideTests: XCTestCase {
     }
     
     func test_start_callsUpdatedBlockWhenTimePassedOneSecond() {
-        let (sut, _) = makeSUT(totalSeconds: 2, interval: 1.0)
+        let (sut, _) = makeSUT(interval: 1.0)
         
-        XCTAssertEqual(sut.remainingSeconds, 2)
+        XCTAssertEqual(sut.remainingTime.freeTimeSeconds, 2)
         
         sut.setUpdatedClosure { [weak sut] in
-            XCTAssertEqual(sut?.remainingSeconds, 1)
+            XCTAssertEqual(sut?.remainingTime.freeTimeSeconds, 1)
         }
         
         sut.start()
@@ -48,7 +48,7 @@ final class ConcreteSideTests: XCTestCase {
     }
     
     func test_start_doesNotCallUpdatedBlockWhenTimeHasNotPassedOneSecond() {
-        let (sut, _) = makeSUT(totalSeconds: 2, interval: 0.5)
+        let (sut, _) = makeSUT(interval: 0.5)
         
         var updatedCount = 0
         sut.setUpdatedClosure { updatedCount += 1 }
@@ -60,7 +60,7 @@ final class ConcreteSideTests: XCTestCase {
     }
     
     func test_start_callsInvalidWhenTimeGoingToZero() {
-        let (sut, timer) = makeSUT(totalSeconds: 2, interval: 0.5)
+        let (sut, timer) = makeSUT(interval: 0.5)
         
         var updatedCount = 0
         sut.setUpdatedClosure { updatedCount += 1 }
@@ -76,7 +76,7 @@ final class ConcreteSideTests: XCTestCase {
     }
     
     func test_start_doesNotCallFireOnTimerWhenRemainingTimeIsZero() {
-        let (sut, timer) = makeSUT(totalSeconds: 2, interval: 1.0)
+        let (sut, timer) = makeSUT(interval: 1.0)
         
         var updatedCount = 0
         sut.setUpdatedClosure { updatedCount += 1 }
@@ -91,7 +91,7 @@ final class ConcreteSideTests: XCTestCase {
     }
     
     func test_start_callsFireOnTimerWhenRemainingSecondsIsZeroButRemainingTimeStillMoreThanHalfDefaultInterval() {
-        let (sut, timer) = makeSUT(totalSeconds: 1, interval: 0.3)
+        let (sut, timer) = makeSUT(interval: 0.3)
         
         var updatedCount = 0
         sut.setUpdatedClosure { updatedCount += 1 }
@@ -109,11 +109,11 @@ final class ConcreteSideTests: XCTestCase {
     
     // MARK: -- Helpers
     
-    private func makeSUT(totalSeconds: UInt = 2, interval: TimeInterval = DefaultInterval,
+    private func makeSUT(interval: TimeInterval = DefaultInterval,
                          file: StaticString = #filePath, line: UInt = #line) -> (sut: ConcreteSide, timer: TimerSpy) {
     
         let timer = TimerSpy(interval: interval, timeProvider: MockTimer.self)
-        let sut = ConcreteSide(totalSeconds: totalSeconds, timer: timer)
+        let sut = ConcreteSide(timeSetting: TimeSetting(freeTimeSeconds: 2, countDownSeconds: 2, countDownTimes: 2), timer: timer)
         
         trackForMemoryLeaks(timer, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
