@@ -9,7 +9,7 @@ import Foundation
 
 public class GoClockEx {
     public enum State: Equatable {
-        case ready, running(atHost: Bool), pausing(atHost: Bool), timedOut
+        case ready, running(atHost: Bool), pausing(atHost: Bool), timedOut(atHost: Bool)
     }
     
     public private(set) var state = State.ready {
@@ -50,7 +50,7 @@ public class GoClockEx {
             guard let self = self else { return }
             if self.hostRemainingTime.remainingCountDownTimes <= 0 {
                 self.timer?.invalidate()
-                self.state = .timedOut
+                self.state = .timedOut(atHost: true)
             }
             self.updated?()
         }
@@ -58,7 +58,7 @@ public class GoClockEx {
             guard let self = self else { return }
             if self.guestRemainingTime.remainingCountDownTimes <= 0 {
                 self.timer?.invalidate()
-                self.state = .timedOut
+                self.state = .timedOut(atHost: false)
             }
             self.updated?()
         }

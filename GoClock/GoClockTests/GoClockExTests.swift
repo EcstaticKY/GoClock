@@ -220,7 +220,7 @@ final class GoClockExTests: XCTestCase {
         XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 1)
         
         XTimer.tick()
-        XCTAssertEqual(sut.state, .timedOut)
+        XCTAssertEqual(sut.state, .timedOut(atHost: true))
     }
     
     func test_guestRemainingCountDownTimesCountToZero_becomesTimedOutStateAndCallsUpdatedBlock() {
@@ -242,7 +242,7 @@ final class GoClockExTests: XCTestCase {
         XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 1)
         
         XTimer.tick()
-        XCTAssertEqual(sut.state, .timedOut)
+        XCTAssertEqual(sut.state, .timedOut(atHost: false))
     }
     
     // MARK: -- Helpers
