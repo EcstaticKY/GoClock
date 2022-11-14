@@ -20,8 +20,8 @@ final class GoClockExTests: XCTestCase {
         
         // Ready state on create
         XCTAssertEqual(sut.state, .ready)
-        XCTAssertEqual(sut.hostRemainingTime, GoClockEx.RemainingTime(timeSetting: defaultTimeSetting()))
-        XCTAssertEqual(sut.guestRemainingTime, GoClockEx.RemainingTime(timeSetting: defaultTimeSetting()))
+        XCTAssertEqual(sut.hostRemainingTime, RemainingTime(timeSetting: defaultTimeSetting()))
+        XCTAssertEqual(sut.guestRemainingTime, RemainingTime(timeSetting: defaultTimeSetting()))
         
         // Only start can work on ready state
         XCTAssertFalse(sut.switchSide())
