@@ -23,18 +23,32 @@ public class GoClockEx {
         private var timeInterval: TimeInterval
         var secondsUpdated: (() -> Void)?
         
+        public private(set) var stillFree = true
         public var currentSeconds: UInt {
-            let seconds = floor(timeInterval)
-            return timeInterval - seconds < DefaultInterval / 2 ? UInt(seconds) : UInt(seconds) + 1
+            let seconds = currentSecondsInInt()
+            return seconds >= 0 ? UInt(seconds) : 0
         }
         public let totalCountDownSeconds: UInt
         public var remainingCountDownTimes: UInt
         
         func tick(interval: TimeInterval) {
             timeInterval -= interval
-            if abs(timeInterval - Double(currentSeconds)) < interval / 2 {
+            if abs(timeInterval - Double(currentSecondsInInt())) < interval / 2 {
+                if currentSecondsInInt() < 0 {
+                    timeInterval = TimeInterval(totalCountDownSeconds)
+                    if stillFree {
+                        stillFree = false
+                    } else {
+                        remainingCountDownTimes -= 1
+                    }
+                }
                 secondsUpdated?()
             }
+        }
+        
+        private func currentSecondsInInt() -> Int {
+            let seconds = floor(timeInterval)
+            return timeInterval - seconds < DefaultInterval / 2 ? Int(seconds) : Int(seconds) + 1
         }
         
         public static func == (lhs: GoClockEx.RemainingTime, rhs: GoClockEx.RemainingTime) -> Bool {
@@ -79,10 +93,20 @@ public class GoClockEx {
         }
         
         hostRemainingTime.secondsUpdated = { [weak self] in
-            self?.updated?()
+            guard let self = self else { return }
+            if self.hostRemainingTime.remainingCountDownTimes <= 0 {
+                self.timer?.invalidate()
+                self.state = .timedOut
+            }
+            self.updated?()
         }
         guestRemainingTime.secondsUpdated = { [weak self] in
-            self?.updated?()
+            guard let self = self else { return }
+            if self.guestRemainingTime.remainingCountDownTimes <= 0 {
+                self.timer?.invalidate()
+                self.state = .timedOut
+            }
+            self.updated?()
         }
         
         state = .running(atHost: true)

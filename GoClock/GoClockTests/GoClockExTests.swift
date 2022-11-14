@@ -97,7 +97,7 @@ final class GoClockExTests: XCTestCase {
         
         XTimer.tick()
         XCTAssertEqual(updatedCount, 2)
-        XCTAssertEqual(sut.hostRemainingTime, GoClockEx.RemainingTime(timeSetting: TimeSetting(freeTimeSeconds: 299, countDownSeconds: 30, countDownTimes: 3)), "\(sut.hostRemainingTime.currentSeconds) is not 299")
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 299)
         
         sut.pause()
         XCTAssertEqual(updatedCount, 3)
@@ -111,8 +111,8 @@ final class GoClockExTests: XCTestCase {
         XTimer.tick()
         XTimer.tick()
         XCTAssertEqual(updatedCount, 6)
-        XCTAssertEqual(sut.hostRemainingTime, GoClockEx.RemainingTime(timeSetting: TimeSetting(freeTimeSeconds: 299, countDownSeconds: 30, countDownTimes: 3)), "\(sut.hostRemainingTime.currentSeconds) is not 299")
-        XCTAssertEqual(sut.guestRemainingTime, GoClockEx.RemainingTime(timeSetting: TimeSetting(freeTimeSeconds: 299, countDownSeconds: 30, countDownTimes: 3)), "\(sut.guestRemainingTime.currentSeconds) is not 299")
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 299)
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 299)
         
         sut.pause()
         sut.resume()
@@ -123,17 +123,135 @@ final class GoClockExTests: XCTestCase {
         XCTAssertEqual(updatedCount, 9)
     }
     
+    func test_hostRemainingSecondsCountToZeroAndAnotherSecond_updateRemainingTimeToNextCountDownPhaseAndCallsUpdatedBlock() {
+        let sut = makeSUT(interval: 0.5, timeSetting: TimeSetting(freeTimeSeconds: 1, countDownSeconds: 1, countDownTimes: 2))
+        
+        var updatedCount = 0
+        sut.setUpdatedBlock {
+            updatedCount += 1
+        }
+        
+        sut.start()
+        XTimer.tick()
+        XTimer.tick()
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.hostRemainingTime.stillFree, true)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.hostRemainingTime.stillFree, true)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 1)
+        XCTAssertEqual(sut.hostRemainingTime.stillFree, false)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 1)
+        XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 2)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 2)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 2)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 1)
+        XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 1)
+    }
+    
+    func test_guestRemainingSecondsCountToZeroAndAnotherSecond_updateRemainingTimeToNextCountDownPhaseAndCallsUpdatedBlock() {
+        let sut = makeSUT(interval: 0.5, timeSetting: TimeSetting(freeTimeSeconds: 1, countDownSeconds: 1, countDownTimes: 2))
+        
+        var updatedCount = 0
+        sut.setUpdatedBlock {
+            updatedCount += 1
+        }
+        
+        sut.start()
+        sut.switchSide()
+        XTimer.tick()
+        XTimer.tick()
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.guestRemainingTime.stillFree, true)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.guestRemainingTime.stillFree, true)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 1)
+        XCTAssertEqual(sut.guestRemainingTime.stillFree, false)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 1)
+        XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 2)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 2)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 2)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 1)
+        XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 1)
+    }
+    
+    func test_hostRemainingCountDownTimesCountToZero_becomesTimedOutStateAndCallsUpdatedBlock() {
+        
+        let sut = makeSUT(interval: 1.0, timeSetting: TimeSetting(freeTimeSeconds: 1, countDownSeconds: 1, countDownTimes: 1))
+        
+        var updatedCount = 0
+        sut.setUpdatedBlock {
+            updatedCount += 1
+        }
+        sut.start()
+        
+        XTimer.tick()
+        XTimer.tick()
+        XTimer.tick()
+        
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 1)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.state, .timedOut)
+    }
+    
+    func test_guestRemainingCountDownTimesCountToZero_becomesTimedOutStateAndCallsUpdatedBlock() {
+        
+        let sut = makeSUT(interval: 1.0, timeSetting: TimeSetting(freeTimeSeconds: 1, countDownSeconds: 1, countDownTimes: 1))
+        
+        var updatedCount = 0
+        sut.setUpdatedBlock {
+            updatedCount += 1
+        }
+        sut.start()
+        sut.switchSide()
+        
+        XTimer.tick()
+        XTimer.tick()
+        XTimer.tick()
+        
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
+        XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 1)
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.state, .timedOut)
+    }
+    
     // MARK: -- Helpers
     
-    private func makeSUT(interval: TimeInterval = DefaultInterval) -> GoClockEx {
-        let sut = GoClockEx(timeSetting: defaultTimeSetting(), interval: interval, timeProvider: XTimer.self)
+    private func makeSUT(interval: TimeInterval = DefaultInterval, timeSetting: TimeSetting = defaultTimeSetting()) -> GoClockEx {
+        let sut = GoClockEx(timeSetting: timeSetting, interval: interval, timeProvider: XTimer.self)
         
         trackForMemoryLeaks(sut)
         return sut
-    }
-    
-    private func defaultTimeSetting() -> TimeSetting {
-        TimeSetting(freeTimeSeconds: 300, countDownSeconds: 30, countDownTimes: 3)
     }
     
     private class XTimer: Timer {
@@ -165,4 +283,8 @@ final class GoClockExTests: XCTestCase {
             block!(currentTimer!)
         }
     }
+}
+
+private func defaultTimeSetting() -> TimeSetting {
+    TimeSetting(freeTimeSeconds: 300, countDownSeconds: 30, countDownTimes: 3)
 }
