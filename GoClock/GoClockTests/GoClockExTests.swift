@@ -20,8 +20,8 @@ final class GoClockExTests: XCTestCase {
         
         // Ready state on create
         XCTAssertEqual(sut.state, .ready)
-        XCTAssertEqual(sut.hostRemainingTime, .free(seconds: 300))
-        XCTAssertEqual(sut.guestRemainingTime, .free(seconds: 300))
+        XCTAssertEqual(sut.hostRemainingTime, GoClockEx.RemainingTime(timeSetting: defaultTimeSetting()))
+        XCTAssertEqual(sut.guestRemainingTime, GoClockEx.RemainingTime(timeSetting: defaultTimeSetting()))
         
         // Only start can work on ready state
         XCTAssertFalse(sut.switchSide())
@@ -81,14 +81,59 @@ final class GoClockExTests: XCTestCase {
         XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule, .invalidate])
     }
     
+    func test_timerTickingInRunningState_updateRemainingTimeAndCallsUpdatedBlock() {
+        let sut = makeSUT(interval: 0.5)
+        
+        var updatedCount = 0
+        sut.setUpdatedBlock {
+            updatedCount += 1
+        }
+        
+        sut.start()
+        XCTAssertEqual(updatedCount, 1)
+        
+        XTimer.tick()
+        XCTAssertEqual(updatedCount, 1)
+        
+        XTimer.tick()
+        XCTAssertEqual(updatedCount, 2)
+        XCTAssertEqual(sut.hostRemainingTime, GoClockEx.RemainingTime(timeSetting: TimeSetting(freeTimeSeconds: 299, countDownSeconds: 30, countDownTimes: 3)), "\(sut.hostRemainingTime.currentSeconds) is not 299")
+        
+        sut.pause()
+        XCTAssertEqual(updatedCount, 3)
+        
+        sut.resume()
+        XCTAssertEqual(updatedCount, 4)
+        
+        sut.switchSide()
+        XCTAssertEqual(updatedCount, 5)
+        
+        XTimer.tick()
+        XTimer.tick()
+        XCTAssertEqual(updatedCount, 6)
+        XCTAssertEqual(sut.hostRemainingTime, GoClockEx.RemainingTime(timeSetting: TimeSetting(freeTimeSeconds: 299, countDownSeconds: 30, countDownTimes: 3)), "\(sut.hostRemainingTime.currentSeconds) is not 299")
+        XCTAssertEqual(sut.guestRemainingTime, GoClockEx.RemainingTime(timeSetting: TimeSetting(freeTimeSeconds: 299, countDownSeconds: 30, countDownTimes: 3)), "\(sut.guestRemainingTime.currentSeconds) is not 299")
+        
+        sut.pause()
+        sut.resume()
+        
+        XCTAssertEqual(updatedCount, 8)
+        XTimer.tick()
+        XTimer.tick()
+        XCTAssertEqual(updatedCount, 9)
+    }
+    
     // MARK: -- Helpers
     
-    private func makeSUT() -> GoClockEx {
-        let timeSetting = TimeSetting(freeTimeSeconds: 300, countDownSeconds: 30, countDownTimes: 3)
-        let sut = GoClockEx(timeSetting: timeSetting, timeProvider: XTimer.self)
+    private func makeSUT(interval: TimeInterval = DefaultInterval) -> GoClockEx {
+        let sut = GoClockEx(timeSetting: defaultTimeSetting(), interval: interval, timeProvider: XTimer.self)
         
         trackForMemoryLeaks(sut)
         return sut
+    }
+    
+    private func defaultTimeSetting() -> TimeSetting {
+        TimeSetting(freeTimeSeconds: 300, countDownSeconds: 30, countDownTimes: 3)
     }
     
     private class XTimer: Timer {
@@ -100,11 +145,13 @@ final class GoClockExTests: XCTestCase {
         
         static var currentTimer: XTimer?
         static var messages = [Message]()
+        static var block: ((Timer) -> Void)?
         
         override class func scheduledTimer(withTimeInterval interval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
             
             let timer = XTimer()
             currentTimer = timer
+            self.block = block
             messages.append(.schedule)
             return timer
         }
@@ -112,6 +159,10 @@ final class GoClockExTests: XCTestCase {
         override func invalidate() {
             XTimer.currentTimer = nil
             XTimer.messages.append(.invalidate)
+        }
+        
+        static func tick() {
+            block!(currentTimer!)
         }
     }
 }
