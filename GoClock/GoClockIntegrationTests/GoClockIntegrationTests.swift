@@ -4,18 +4,20 @@
 ///
 
 import XCTest
-@testable import GoClock
+import GoClock
 
 final class GoClockIntegrationTests: XCTestCase {
+    
     func test_GoClockInstanceCallsUpdatedWhenTimerTickingOneSecond() {
-        let sut = makeSUT()
+        let sut = makeSUTex()
 
         let exp = expectation(description: "Wait for clock updated")
-        exp.expectedFulfillmentCount = 6
-        sut.setUpdatedClosure {
+        exp.expectedFulfillmentCount = 7
+        sut.setUpdatedBlock {
             exp.fulfill()
         }
 
+        sut.start()
         sut.switchSide()
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.1) {
@@ -31,20 +33,17 @@ final class GoClockIntegrationTests: XCTestCase {
         
         wait(for: [exp], timeout: 3.3)
 
-        XCTAssertEqual((sut.sides[0]).remainingTime.freeTimeSeconds, 28)
-        XCTAssertEqual((sut.sides[1]).remainingTime.freeTimeSeconds, 29)
+        XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 9)
+        XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 8)
     }
+    
+    private func makeSUTex(file: StaticString = #filePath, line: UInt = #line) -> GoClockEx {
 
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> GoClock {
-
-        let side0 = ConcreteSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2), timer: GoTimer())
-        let side1 = ConcreteSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2), timer: GoTimer())
-        let sut = GoClock(sides: [side0, side1])
+        let timeSetting = TimeSetting(freeTimeSeconds: 10, countDownSeconds: 10, countDownTimes: 2)
+        let sut = GoClockEx(timeSetting: timeSetting)
 
         trackForMemoryLeaks(sut)
-        trackForMemoryLeaks(side0)
-        trackForMemoryLeaks(side1)
-
+        
         return sut
     }
 }
