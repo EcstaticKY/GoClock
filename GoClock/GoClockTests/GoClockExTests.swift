@@ -10,6 +10,11 @@ import XCTest
 
 final class GoClockExTests: XCTestCase {
     
+    override func setUp() {
+        XTimer.currentTimer = nil
+        XTimer.messages.removeAll()
+    }
+    
     func test_actionsAlterStatesCorrectly() {
         let sut = makeSUT()
         
@@ -26,6 +31,7 @@ final class GoClockExTests: XCTestCase {
         
         // Start alters state to running at host
         XCTAssertTrue(sut.start())
+        XCTAssertFalse(sut.start())
         XCTAssertEqual(sut.state, .running(atHost: true))
         
         // Switch side toggles if running state at host side
@@ -52,19 +58,60 @@ final class GoClockExTests: XCTestCase {
         XCTAssertEqual(sut.state, .ready)
     }
     
-    func test_startOrSwitchSideOrResume_schedulesANewTimer() {
+    func test_actionsScheduleAndInvalidateTimerCorrectly() {
         let sut = makeSUT()
+        XCTAssertNil(XTimer.currentTimer)
         
         sut.start()
+        XCTAssertNotNil(XTimer.currentTimer)
+        XCTAssertEqual(XTimer.messages, [.schedule])
+        
+        sut.switchSide()
+        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule])
+        
+        sut.pause()
+        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate])
+        
+        sut.resume()
+        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule])
+        
+        sut.pause()
+        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule, .invalidate])
+        sut.reset()
+        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule, .invalidate])
     }
     
     // MARK: -- Helpers
     
     private func makeSUT() -> GoClockEx {
         let timeSetting = TimeSetting(freeTimeSeconds: 300, countDownSeconds: 30, countDownTimes: 3)
-        let sut = GoClockEx(timeSetting: timeSetting)
+        let sut = GoClockEx(timeSetting: timeSetting, timeProvider: XTimer.self)
         
         trackForMemoryLeaks(sut)
         return sut
+    }
+    
+    private class XTimer: Timer {
+        
+        enum Message {
+            case schedule
+            case invalidate
+        }
+        
+        static var currentTimer: XTimer?
+        static var messages = [Message]()
+        
+        override class func scheduledTimer(withTimeInterval interval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
+            
+            let timer = XTimer()
+            currentTimer = timer
+            messages.append(.schedule)
+            return timer
+        }
+        
+        override func invalidate() {
+            XTimer.currentTimer = nil
+            XTimer.messages.append(.invalidate)
+        }
     }
 }

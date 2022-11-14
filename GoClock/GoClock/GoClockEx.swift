@@ -22,15 +22,24 @@ public class GoClockEx {
     public var guestRemainingTime: RemainingTime
     
     private let timeSetting: TimeSetting
+    private let timeProvider: Timer.Type
+    private var timer: Timer?
     
-    public init(timeSetting: TimeSetting) {
+    public init(timeSetting: TimeSetting, timeProvider: Timer.Type = Timer.self) {
         self.timeSetting = timeSetting
+        self.timeProvider = timeProvider
         hostRemainingTime = .free(seconds: timeSetting.freeTimeSeconds)
         guestRemainingTime = .free(seconds: timeSetting.freeTimeSeconds)
     }
     
     @discardableResult
     public func start() -> Bool {
+        guard case .ready = state else {
+            return false
+        }
+        timer = timeProvider.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+            
+        })
         state = .running(atHost: true)
         return true
     }
@@ -40,6 +49,11 @@ public class GoClockEx {
         guard case .running(let atHost) = state else {
             return false
         }
+        
+        timer?.invalidate()
+        timer = timeProvider.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+            
+        })
         
         state = .running(atHost: !atHost)
         return true
@@ -51,6 +65,7 @@ public class GoClockEx {
             return false
         }
         
+        timer?.invalidate()
         state = .pausing(atHost: atHost)
         return true
     }
@@ -61,6 +76,9 @@ public class GoClockEx {
             return false
         }
         
+        timer = timeProvider.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+            
+        })
         state = .running(atHost: atHost)
         return true
     }
