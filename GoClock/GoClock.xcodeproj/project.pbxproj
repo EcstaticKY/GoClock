@@ -24,6 +24,7 @@
 		38F14554291C9AAB00D0B1EE /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F14552291C9A9F00D0B1EE /* TestConstants.swift */; };
 		38F14555291C9AC600D0B1EE /* XCTestCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3B2290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift */; };
 		38F145592920910200D0B1EE /* GoClockExTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F145582920910200D0B1EE /* GoClockExTests.swift */; };
+		38F1456B2922043500D0B1EE /* GoClockEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F1456A2922043500D0B1EE /* GoClockEx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		38F14547291C9A4E00D0B1EE /* GoClockIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoClockIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38F14552291C9A9F00D0B1EE /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
 		38F145582920910200D0B1EE /* GoClockExTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockExTests.swift; sourceTree = "<group>"; };
+		38F1456A2922043500D0B1EE /* GoClockEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockEx.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				386AF3BC290BFAA8009CDE32 /* GoClock.swift */,
 				386AF3BB290BFAA8009CDE32 /* GoTimer.swift */,
 				386AF3BD290BFAA8009CDE32 /* Side.swift */,
+				38F1456A2922043500D0B1EE /* GoClockEx.swift */,
 			);
 			path = GoClock;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				386AF3C0290BFAA8009CDE32 /* GoClock.swift in Sources */,
+				38F1456B2922043500D0B1EE /* GoClockEx.swift in Sources */,
 				386AF3BF290BFAA8009CDE32 /* GoTimer.swift in Sources */,
 				386AF3C1290BFAA8009CDE32 /* Side.swift in Sources */,
 			);
