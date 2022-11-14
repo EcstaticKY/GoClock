@@ -31,8 +31,8 @@ final class GoClockIntegrationTests: XCTestCase {
         
         wait(for: [exp], timeout: 3.3)
 
-        XCTAssertEqual((sut.sides[0] as! ConcreteSide).remainingTime.freeTimeSeconds, 28)
-        XCTAssertEqual((sut.sides[1] as! ConcreteSide).remainingTime.freeTimeSeconds, 29)
+        XCTAssertEqual((sut.sides[0]).remainingTime.freeTimeSeconds, 28)
+        XCTAssertEqual((sut.sides[1]).remainingTime.freeTimeSeconds, 29)
     }
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> GoClock {

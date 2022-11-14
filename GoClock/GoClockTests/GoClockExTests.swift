@@ -15,9 +15,9 @@ public class GoClockEx {
     
     public var state = State.ready
     
-    private var sides: [Side]
+    private var sides: [ConcreteSide]
     
-    init(sides: [Side]) {
+    init(sides: [ConcreteSide]) {
         self.sides = sides
     }
 }

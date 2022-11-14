@@ -4,45 +4,35 @@
 ///
 
 import Foundation
-import GoClock
+@testable import GoClock
 
-class MockSide: Side {
-    var timeSetting: TimeSetting
+class MockSide: ConcreteSide {
     
-    var remainingTime: (freeTimeSeconds: UInt, countDownTimes: UInt) {
-        (UInt(remainingFreeTime), remainingCountDownTimes)
-    }
-    
-    private var remainingFreeTime: TimeInterval
-    private var remainingCountDownTimes: UInt
+//    private var remainingFreeTime: TimeInterval
+//    private var remainingCountDownTimes: UInt
     
     enum Message {
     case start, stop
     }
     
     var messages = [Message]()
-    var updated: (() -> Void)?
     
     init(timeSetting: TimeSetting) {
-        self.timeSetting = timeSetting
-        remainingFreeTime = TimeInterval(timeSetting.freeTimeSeconds)
-        remainingCountDownTimes = timeSetting.countDownTimes
+        let timer = GoTimer(interval: 1.0, timeProvider: MockTimer.self)
+        super.init(timeSetting: timeSetting, timer: timer)
     }
     
-    func setUpdatedClosure(_ updated: @escaping () -> Void) {
-        self.updated = updated
-    }
-    
-    func start() {
+    override func start() {
         messages.append(.start)
+        super.start()
     }
     
-    func stop() {
+    override func stop() {
         messages.append(.stop)
+        super.stop()
     }
     
-    func callsUpdated() {
-        remainingFreeTime -= 1
-        updated?()
+    func callsUpdated(at index: Int = 0) {
+        MockTimer.tick(at: index)
     }
 }

@@ -7,6 +7,10 @@ import XCTest
 @testable import GoClock
 
 final class GoClockTests: XCTestCase {
+    override func setUp() {
+        MockTimer.currentTimers.removeAll()
+    }
+    
     func test_createsTwoSidesCorrectlyOnCreate() {
         let sut = makeSUT()
         
@@ -53,12 +57,12 @@ final class GoClockTests: XCTestCase {
         }
         
         sut.switchSide()
-        (sut.sides[0] as! MockSide).callsUpdated()
-        (sut.sides[1] as! MockSide).callsUpdated()
+        (sut.sides[0] as! MockSide).callsUpdated(at: 0)
+//        (sut.sides[1] as! MockSide).callsUpdated(at: 1)
         
         sut.switchSide()
-        (sut.sides[1] as! MockSide).callsUpdated()
-        (sut.sides[0] as! MockSide).callsUpdated()
+        (sut.sides[1] as! MockSide).callsUpdated(at: 1)
+//        (sut.sides[0] as! MockSide).callsUpdated(at: 0)
         
         XCTAssertEqual(updatedCount, 4)
     }

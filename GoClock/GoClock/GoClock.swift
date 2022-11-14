@@ -6,11 +6,11 @@
 import Foundation
 
 public class GoClock {
-    public let sides: [Side]
+    public let sides: [ConcreteSide]
     public var currentRunningIndex = 1
     var updated: (() -> Void)?
     
-    public init(sides: [Side]) {
+    public init(sides: [ConcreteSide]) {
         self.sides = sides
         sides.enumerated().forEach { (index, side) in
             side.setUpdatedClosure { [weak self] in

@@ -17,17 +17,7 @@ public struct TimeSetting {
     public let countDownTimes: UInt
 }
 
-public protocol Side {
-    var timeSetting: TimeSetting { get }
-    var remainingTime: (freeTimeSeconds: UInt, countDownTimes: UInt) { get }
-    
-    func setUpdatedClosure(_ updated: @escaping () -> Void)
-    
-    func start()
-    func stop()
-}
-
-public class ConcreteSide: Side {
+public class ConcreteSide {
     
     public let timeSetting: TimeSetting
     public var remainingTime: (freeTimeSeconds: UInt, countDownTimes: UInt) {

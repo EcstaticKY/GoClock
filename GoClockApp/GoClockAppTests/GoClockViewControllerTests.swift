@@ -43,35 +43,35 @@ final class GoClockViewControllerTests: XCTestCase {
         XCTAssertEqual(clock.switchSideCount, 1)
     }
     
-    func test_clockRunning_clockUpdatedWhenSecondsPasses() {
-        let (sut, clock) = makeSUT()
-        sut.loadViewIfNeeded()
-        
-        sut.tapGuestSideView()
-        clock.callsUpdated()
-        
-        XCTAssertEqual(sut.hostTime, 1)
-        
-        sut.tapHostSideView()
-        clock.callsUpdated()
-        
-        XCTAssertEqual(sut.guestTime, 1)
-    }
-    
-    func test_tapsSideView_doesNotCallSwitchSideOnClock_whenOneSideRemainingTimeIsZero() {
-        let (sut, clock) = makeSUT()
-        sut.loadViewIfNeeded()
-        
-        sut.tapGuestSideView()
-        clock.callsUpdated()
-        clock.callsUpdated()
-        
-        XCTAssertEqual(sut.hostTime, 0)
-        
-        sut.tapHostSideView()
-        
-        XCTAssertEqual(clock.switchSideCount, 1)
-    }
+//    func test_clockRunning_clockUpdatedWhenSecondsPasses() {
+//        let (sut, clock) = makeSUT()
+//        sut.loadViewIfNeeded()
+//        
+//        sut.tapGuestSideView()
+//        clock.callsUpdated()
+//        
+//        XCTAssertEqual(sut.hostTime, 1)
+//        
+//        sut.tapHostSideView()
+//        clock.callsUpdated()
+//        
+//        XCTAssertEqual(sut.guestTime, 1)
+//    }
+//    
+//    func test_tapsSideView_doesNotCallSwitchSideOnClock_whenOneSideRemainingTimeIsZero() {
+//        let (sut, clock) = makeSUT()
+//        sut.loadViewIfNeeded()
+//        
+//        sut.tapGuestSideView()
+//        clock.callsUpdated()
+//        clock.callsUpdated()
+//        
+//        XCTAssertEqual(sut.hostTime, 0)
+//        
+//        sut.tapHostSideView()
+//        
+//        XCTAssertEqual(clock.switchSideCount, 1)
+//    }
     
     // MARK: -- Helpers
     
