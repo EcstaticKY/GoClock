@@ -1,5 +1,5 @@
 //
-//  GoClockEx.swift
+//  GoClock.swift
 //  GoClock
 //
 //  Created by zky on 2022/11/14.
@@ -9,7 +9,7 @@ import Foundation
 
 public let DefaultInterval = 0.1
 
-public class GoClockEx {
+public class GoClock {
     public enum State: Equatable {
         case ready, running(atHost: Bool), pausing(atHost: Bool), timedOut(atHost: Bool)
     }

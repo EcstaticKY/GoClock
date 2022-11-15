@@ -20,7 +20,7 @@
 		386AF3E6290BFBF8009CDE32 /* GoClockViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3E5290BFBF8009CDE32 /* GoClockViewControllerTests.swift */; };
 		38F14557291C9BB200D0B1EE /* snapshots in Resources */ = {isa = PBXBuildFile; fileRef = 38F14556291C9BB200D0B1EE /* snapshots */; };
 		38F145692921C6C200D0B1EE /* MockTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F145682921C6C200D0B1EE /* MockTimer.swift */; };
-		38F14572292275F500D0B1EE /* MockGoClockEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F14571292275F500D0B1EE /* MockGoClockEx.swift */; };
+		38F14572292275F500D0B1EE /* MockGoClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F14571292275F500D0B1EE /* MockGoClock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,7 @@
 		386AF3E5290BFBF8009CDE32 /* GoClockViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockViewControllerTests.swift; sourceTree = "<group>"; };
 		38F14556291C9BB200D0B1EE /* snapshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = snapshots; sourceTree = "<group>"; };
 		38F145682921C6C200D0B1EE /* MockTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTimer.swift; sourceTree = "<group>"; };
-		38F14571292275F500D0B1EE /* MockGoClockEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGoClockEx.swift; sourceTree = "<group>"; };
+		38F14571292275F500D0B1EE /* MockGoClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGoClock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +98,7 @@
 			children = (
 				380A4392290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift */,
 				38F145682921C6C200D0B1EE /* MockTimer.swift */,
-				38F14571292275F500D0B1EE /* MockGoClockEx.swift */,
+				38F14571292275F500D0B1EE /* MockGoClock.swift */,
 			);
 			path = "Test Helpers";
 			sourceTree = "<group>";
@@ -261,7 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38F145692921C6C200D0B1EE /* MockTimer.swift in Sources */,
-				38F14572292275F500D0B1EE /* MockGoClockEx.swift in Sources */,
+				38F14572292275F500D0B1EE /* MockGoClock.swift in Sources */,
 				380A4393290C079C0056EF00 /* XCTestCase+TrackForMemoryLeaks.swift in Sources */,
 				380A4397290F9F980056EF00 /* GoClockSnapshotTests.swift in Sources */,
 				386AF3E6290BFBF8009CDE32 /* GoClockViewControllerTests.swift in Sources */,

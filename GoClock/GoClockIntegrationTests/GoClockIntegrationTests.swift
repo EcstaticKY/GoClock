@@ -37,10 +37,10 @@ final class GoClockIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 8)
     }
     
-    private func makeSUTex(file: StaticString = #filePath, line: UInt = #line) -> GoClockEx {
+    private func makeSUTex(file: StaticString = #filePath, line: UInt = #line) -> GoClock {
 
         let timeSetting = TimeSetting(freeTimeSeconds: 10, countDownSeconds: 10, countDownTimes: 2)
-        let sut = GoClockEx(timeSetting: timeSetting)
+        let sut = GoClock(timeSetting: timeSetting)
 
         trackForMemoryLeaks(sut)
         

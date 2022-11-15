@@ -247,8 +247,8 @@ final class GoClockExTests: XCTestCase {
     
     // MARK: -- Helpers
     
-    private func makeSUT(interval: TimeInterval = DefaultInterval, timeSetting: TimeSetting = defaultTimeSetting()) -> GoClockEx {
-        let sut = GoClockEx(timeSetting: timeSetting, interval: interval, timeProvider: MockTimer.self)
+    private func makeSUT(interval: TimeInterval = DefaultInterval, timeSetting: TimeSetting = defaultTimeSetting()) -> GoClock {
+        let sut = GoClock(timeSetting: timeSetting, interval: interval, timeProvider: MockTimer.self)
         
         trackForMemoryLeaks(sut)
         return sut

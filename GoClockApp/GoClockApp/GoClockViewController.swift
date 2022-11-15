@@ -6,7 +6,7 @@
 import UIKit
 import GoClock
 
-extension GoClockEx.State {
+extension GoClock.State {
     var currentSideIsHost: Bool {
         switch self {
         case .ready: return false
@@ -18,10 +18,10 @@ extension GoClockEx.State {
 }
 
 final class GoClockViewController: UIViewController {
-    private var clock: GoClockEx?
+    private var clock: GoClock?
     private var hostSideBottomConstraint: NSLayoutConstraint?
     
-    convenience init(clock: GoClockEx) {
+    convenience init(clock: GoClock) {
         self.init()
         self.clock = clock
         clock.setUpdatedBlock { [weak self] in

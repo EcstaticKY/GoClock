@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        let clock = GoClockEx(timeSetting: TimeSetting(freeTimeSeconds: 30, countDownSeconds: 2, countDownTimes: 2))
+        let clock = GoClock(timeSetting: TimeSetting(freeTimeSeconds: 30, countDownSeconds: 2, countDownTimes: 2))
         window.rootViewController = GoClockViewController(clock: clock)
         
         self.window = window

@@ -15,7 +15,7 @@
 		38F14551291C9A6600D0B1EE /* GoClockIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3B3290BFA97009CDE32 /* GoClockIntegrationTests.swift */; };
 		38F14555291C9AC600D0B1EE /* XCTestCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3B2290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift */; };
 		38F145592920910200D0B1EE /* GoClockExTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F145582920910200D0B1EE /* GoClockExTests.swift */; };
-		38F1456B2922043500D0B1EE /* GoClockEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F1456A2922043500D0B1EE /* GoClockEx.swift */; };
+		38F1456B2922043500D0B1EE /* GoClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F1456A2922043500D0B1EE /* GoClock.swift */; };
 		38F1456D292270B000D0B1EE /* RemainingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F1456C292270B000D0B1EE /* RemainingTime.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,7 +45,7 @@
 		386AF3BD290BFAA8009CDE32 /* TimeSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSetting.swift; sourceTree = "<group>"; };
 		38F14547291C9A4E00D0B1EE /* GoClockIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoClockIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38F145582920910200D0B1EE /* GoClockExTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockExTests.swift; sourceTree = "<group>"; };
-		38F1456A2922043500D0B1EE /* GoClockEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockEx.swift; sourceTree = "<group>"; };
+		38F1456A2922043500D0B1EE /* GoClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClock.swift; sourceTree = "<group>"; };
 		38F1456C292270B000D0B1EE /* RemainingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingTime.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +101,7 @@
 			children = (
 				3816A8C0290024A8005DA4A7 /* GoClock.h */,
 				386AF3BD290BFAA8009CDE32 /* TimeSetting.swift */,
-				38F1456A2922043500D0B1EE /* GoClockEx.swift */,
+				38F1456A2922043500D0B1EE /* GoClock.swift */,
 				38F1456C292270B000D0B1EE /* RemainingTime.swift */,
 			);
 			path = GoClock;
@@ -272,7 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38F1456B2922043500D0B1EE /* GoClockEx.swift in Sources */,
+				38F1456B2922043500D0B1EE /* GoClock.swift in Sources */,
 				38F1456D292270B000D0B1EE /* RemainingTime.swift in Sources */,
 				386AF3C1290BFAA8009CDE32 /* TimeSetting.swift in Sources */,
 			);

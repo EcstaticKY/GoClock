@@ -1,5 +1,5 @@
 //
-//  MockGoClockEx.swift
+//  MockGoClock.swift
 //  GoClockAppTests
 //
 //  Created by zky on 2022/11/14.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import GoClock
 
-class MockGoClockEx: GoClockEx {
+class MockGoClock: GoClock {
     enum Message {
     case start, switchSide, pause, resume
     }

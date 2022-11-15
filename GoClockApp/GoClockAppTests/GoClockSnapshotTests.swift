@@ -40,8 +40,8 @@ final class GoClockSnapshotTests: XCTestCase {
 
     // MARK: -- Helpers
 
-    private func makeSUT(interval: TimeInterval = 0.5) -> (sut: GoClockViewController, clock: MockGoClockEx) {
-        let clock = MockGoClockEx(timeSetting: TimeSetting(freeTimeSeconds: 3, countDownSeconds: 3, countDownTimes: 3), interval: interval, timeProvider: MockTimer.self)
+    private func makeSUT(interval: TimeInterval = 0.5) -> (sut: GoClockViewController, clock: MockGoClock) {
+        let clock = MockGoClock(timeSetting: TimeSetting(freeTimeSeconds: 3, countDownSeconds: 3, countDownTimes: 3), interval: interval, timeProvider: MockTimer.self)
         
         let sut = GoClockViewController(clock: clock)
         
