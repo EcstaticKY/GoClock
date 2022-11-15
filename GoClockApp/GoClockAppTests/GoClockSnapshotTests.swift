@@ -1,6 +1,6 @@
 ///
 /// Created by Zheng Kanyan on 2022/10/31.
-/// 
+///
 ///
 
 import XCTest
@@ -16,7 +16,7 @@ final class GoClockSnapshotTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         
-        record(snapshot: sut.snapshot(), named: "DEFAULT_CLOCK")
+        assert(snapshot: sut.snapshot(), named: "DEFAULT_CLOCK")
     }
     
     func test_clockWithHostSideRunning() {
@@ -25,7 +25,7 @@ final class GoClockSnapshotTests: XCTestCase {
         sut.loadViewIfNeeded()
         sut.tapGuestSideView()
         
-        record(snapshot: sut.snapshot(), named: "HOST_SIDE_RUNNING")
+        assert(snapshot: sut.snapshot(), named: "HOST_SIDE_RUNNING")
     }
     
     func test_clockWithGuestSideRunning() {
@@ -35,19 +35,16 @@ final class GoClockSnapshotTests: XCTestCase {
         sut.tapGuestSideView()
         sut.tapHostSideView()
         
-        record(snapshot: sut.snapshot(), named: "GUEST_SIDE_RUNNING")
+        assert(snapshot: sut.snapshot(), named: "GUEST_SIDE_RUNNING")
     }
 
     // MARK: -- Helpers
 
-    private func makeSUT() -> (sut: GoClockViewController, clock: MockGoClock) {
-        let side0 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2))
-        let side1 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: DefaultTotalSeconds, countDownSeconds: 2, countDownTimes: 2))
-        let clock = MockGoClock(sides: [side0, side1])
+    private func makeSUT(interval: TimeInterval = 0.5) -> (sut: GoClockViewController, clock: MockGoClockEx) {
+        let clock = MockGoClockEx(timeSetting: TimeSetting(freeTimeSeconds: 3, countDownSeconds: 3, countDownTimes: 3), interval: interval, timeProvider: XTimer.self)
+        
         let sut = GoClockViewController(clock: clock)
         
-        trackForMemoryLeaks(side0)
-        trackForMemoryLeaks(side1)
         trackForMemoryLeaks(clock)
         trackForMemoryLeaks(sut)
         

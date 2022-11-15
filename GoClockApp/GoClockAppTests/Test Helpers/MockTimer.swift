@@ -5,6 +5,36 @@
 
 import Foundation
 
+class XTimer: Timer {
+    
+    enum Message {
+        case schedule
+        case invalidate
+    }
+    
+    static var currentTimer: XTimer?
+    static var messages = [Message]()
+    static var block: ((Timer) -> Void)?
+    
+    override class func scheduledTimer(withTimeInterval interval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
+        
+        let timer = XTimer()
+        currentTimer = timer
+        self.block = block
+        messages.append(.schedule)
+        return timer
+    }
+    
+    override func invalidate() {
+        XTimer.currentTimer = nil
+        XTimer.messages.append(.invalidate)
+    }
+    
+    static func tick() {
+        block!(currentTimer!)
+    }
+}
+
 class MockTimer: Timer {
     
     enum Message {

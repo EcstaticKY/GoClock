@@ -14,75 +14,55 @@ final class GoClockViewControllerTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         
+        XCTAssertEqual(sut.hostTime, 3)
+        XCTAssertEqual(sut.guestTime, 3)
+    }
+    
+    func test_tapsSideView_callsStartAndSwitchSideOnClockIfTapOnRightSide() {
+        let (sut, clock) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        sut.tapGuestSideView()
+        XCTAssertEqual(clock.messages, [.start])
+        
+        sut.tapHostSideView()
+        XCTAssertEqual(clock.messages, [.start, .switchSide])
+        
+        sut.tapHostSideView()
+        XCTAssertEqual(clock.messages, [.start, .switchSide])
+        
+        sut.tapGuestSideView()
+        XCTAssertEqual(clock.messages, [.start, .switchSide, .switchSide])
+    }
+    
+    func test_clockRunning_clockUpdatedWhenSecondsPasses() {
+        let (sut, _) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        sut.tapGuestSideView()
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.hostTime, 3)
+        
+        XTimer.tick()
         XCTAssertEqual(sut.hostTime, 2)
+        
+        sut.tapHostSideView()
+        
+        XTimer.tick()
+        XCTAssertEqual(sut.guestTime, 3)
+        
+        XTimer.tick()
         XCTAssertEqual(sut.guestTime, 2)
     }
     
-    func test_tapsRunningSideView_callsSwitchSideOnClock() {
-        let (sut, clock) = makeSUT()
-        sut.loadViewIfNeeded()
-        
-        sut.tapGuestSideView()
-        XCTAssertEqual(clock.switchSideCount, 1)
-        
-        sut.tapHostSideView()
-        XCTAssertEqual(clock.switchSideCount, 2)
-    }
-    
-    func test_tapsNotRunningSideView_doesNotCallSwitchSideOnClock() {
-        let (sut, clock) = makeSUT()
-        sut.loadViewIfNeeded()
-        
-        sut.tapHostSideView()
-        XCTAssertEqual(clock.switchSideCount, 0)
-        
-        sut.tapGuestSideView()
-        XCTAssertEqual(clock.switchSideCount, 1)
-        
-        sut.tapGuestSideView()
-        XCTAssertEqual(clock.switchSideCount, 1)
-    }
-    
-//    func test_clockRunning_clockUpdatedWhenSecondsPasses() {
-//        let (sut, clock) = makeSUT()
-//        sut.loadViewIfNeeded()
-//        
-//        sut.tapGuestSideView()
-//        clock.callsUpdated()
-//        
-//        XCTAssertEqual(sut.hostTime, 1)
-//        
-//        sut.tapHostSideView()
-//        clock.callsUpdated()
-//        
-//        XCTAssertEqual(sut.guestTime, 1)
-//    }
-//    
-//    func test_tapsSideView_doesNotCallSwitchSideOnClock_whenOneSideRemainingTimeIsZero() {
-//        let (sut, clock) = makeSUT()
-//        sut.loadViewIfNeeded()
-//        
-//        sut.tapGuestSideView()
-//        clock.callsUpdated()
-//        clock.callsUpdated()
-//        
-//        XCTAssertEqual(sut.hostTime, 0)
-//        
-//        sut.tapHostSideView()
-//        
-//        XCTAssertEqual(clock.switchSideCount, 1)
-//    }
-    
     // MARK: -- Helpers
     
-    private func makeSUT() -> (sut: GoClockViewController, clock: MockGoClock) {
-        let side0 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: 2, countDownSeconds: 2, countDownTimes: 2))
-        let side1 = MockSide(timeSetting: TimeSetting(freeTimeSeconds: 2, countDownSeconds: 2, countDownTimes: 2))
-        let clock = MockGoClock(sides: [side0, side1])
+    private func makeSUT(interval: TimeInterval = 0.5) -> (sut: GoClockViewController, clock: MockGoClockEx) {
+        let clock = MockGoClockEx(timeSetting: TimeSetting(freeTimeSeconds: 3, countDownSeconds: 3, countDownTimes: 3), interval: interval, timeProvider: XTimer.self)
+        
         let sut = GoClockViewController(clock: clock)
         
-        trackForMemoryLeaks(side0)
-        trackForMemoryLeaks(side1)
         trackForMemoryLeaks(clock)
         trackForMemoryLeaks(sut)
         
