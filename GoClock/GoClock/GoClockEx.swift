@@ -7,6 +7,8 @@
 
 import Foundation
 
+public let DefaultInterval = 0.1
+
 public class GoClockEx {
     public enum State: Equatable {
         case ready, running(atHost: Bool), pausing(atHost: Bool), timedOut(atHost: Bool)

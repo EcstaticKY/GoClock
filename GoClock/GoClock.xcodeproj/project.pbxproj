@@ -7,21 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		380A438F290C06B00056EF00 /* MockSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A438E290C06B00056EF00 /* MockSide.swift */; };
 		3816A8C6290024A9005DA4A7 /* GoClock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3816A8BD290024A8005DA4A7 /* GoClock.framework */; };
 		3816A8CC290024A9005DA4A7 /* GoClock.h in Headers */ = {isa = PBXBuildFile; fileRef = 3816A8C0290024A8005DA4A7 /* GoClock.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		386AF3B4290BFA97009CDE32 /* ConcreteSideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3AD290BFA97009CDE32 /* ConcreteSideTests.swift */; };
-		386AF3B5290BFA97009CDE32 /* GoTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3AE290BFA97009CDE32 /* GoTimerTests.swift */; };
-		386AF3B6290BFA97009CDE32 /* GoClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3AF290BFA97009CDE32 /* GoClockTests.swift */; };
-		386AF3B7290BFA97009CDE32 /* MockTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3B1290BFA97009CDE32 /* MockTimer.swift */; };
 		386AF3B8290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3B2290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift */; };
-		386AF3BF290BFAA8009CDE32 /* GoTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3BB290BFAA8009CDE32 /* GoTimer.swift */; };
-		386AF3C0290BFAA8009CDE32 /* GoClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3BC290BFAA8009CDE32 /* GoClock.swift */; };
-		386AF3C1290BFAA8009CDE32 /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3BD290BFAA8009CDE32 /* Side.swift */; };
+		386AF3C1290BFAA8009CDE32 /* TimeSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3BD290BFAA8009CDE32 /* TimeSetting.swift */; };
 		38F1454B291C9A4E00D0B1EE /* GoClock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3816A8BD290024A8005DA4A7 /* GoClock.framework */; };
 		38F14551291C9A6600D0B1EE /* GoClockIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3B3290BFA97009CDE32 /* GoClockIntegrationTests.swift */; };
-		38F14553291C9A9F00D0B1EE /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F14552291C9A9F00D0B1EE /* TestConstants.swift */; };
-		38F14554291C9AAB00D0B1EE /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F14552291C9A9F00D0B1EE /* TestConstants.swift */; };
 		38F14555291C9AC600D0B1EE /* XCTestCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF3B2290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift */; };
 		38F145592920910200D0B1EE /* GoClockExTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F145582920910200D0B1EE /* GoClockExTests.swift */; };
 		38F1456B2922043500D0B1EE /* GoClockEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F1456A2922043500D0B1EE /* GoClockEx.swift */; };
@@ -46,21 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		380A438E290C06B00056EF00 /* MockSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSide.swift; sourceTree = "<group>"; };
 		3816A8BD290024A8005DA4A7 /* GoClock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoClock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3816A8C0290024A8005DA4A7 /* GoClock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoClock.h; sourceTree = "<group>"; };
 		3816A8C5290024A9005DA4A7 /* GoClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		386AF3AD290BFA97009CDE32 /* ConcreteSideTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteSideTests.swift; sourceTree = "<group>"; };
-		386AF3AE290BFA97009CDE32 /* GoTimerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoTimerTests.swift; sourceTree = "<group>"; };
-		386AF3AF290BFA97009CDE32 /* GoClockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoClockTests.swift; sourceTree = "<group>"; };
-		386AF3B1290BFA97009CDE32 /* MockTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTimer.swift; sourceTree = "<group>"; };
 		386AF3B2290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+TrackForMemoryLeaks.swift"; sourceTree = "<group>"; };
 		386AF3B3290BFA97009CDE32 /* GoClockIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoClockIntegrationTests.swift; sourceTree = "<group>"; };
-		386AF3BB290BFAA8009CDE32 /* GoTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoTimer.swift; sourceTree = "<group>"; };
-		386AF3BC290BFAA8009CDE32 /* GoClock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoClock.swift; sourceTree = "<group>"; };
-		386AF3BD290BFAA8009CDE32 /* Side.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
+		386AF3BD290BFAA8009CDE32 /* TimeSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSetting.swift; sourceTree = "<group>"; };
 		38F14547291C9A4E00D0B1EE /* GoClockIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoClockIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		38F14552291C9A9F00D0B1EE /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
 		38F145582920910200D0B1EE /* GoClockExTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockExTests.swift; sourceTree = "<group>"; };
 		38F1456A2922043500D0B1EE /* GoClockEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoClockEx.swift; sourceTree = "<group>"; };
 		38F1456C292270B000D0B1EE /* RemainingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingTime.swift; sourceTree = "<group>"; };
@@ -117,9 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				3816A8C0290024A8005DA4A7 /* GoClock.h */,
-				386AF3BC290BFAA8009CDE32 /* GoClock.swift */,
-				386AF3BB290BFAA8009CDE32 /* GoTimer.swift */,
-				386AF3BD290BFAA8009CDE32 /* Side.swift */,
+				386AF3BD290BFAA8009CDE32 /* TimeSetting.swift */,
 				38F1456A2922043500D0B1EE /* GoClockEx.swift */,
 				38F1456C292270B000D0B1EE /* RemainingTime.swift */,
 			);
@@ -129,11 +110,8 @@
 		3816A8C9290024A9005DA4A7 /* GoClockTests */ = {
 			isa = PBXGroup;
 			children = (
-				386AF3AF290BFA97009CDE32 /* GoClockTests.swift */,
-				386AF3AD290BFA97009CDE32 /* ConcreteSideTests.swift */,
-				386AF3AE290BFA97009CDE32 /* GoTimerTests.swift */,
-				386AF3B0290BFA97009CDE32 /* Test Helpers */,
 				38F145582920910200D0B1EE /* GoClockExTests.swift */,
+				386AF3B0290BFA97009CDE32 /* Test Helpers */,
 			);
 			path = GoClockTests;
 			sourceTree = "<group>";
@@ -141,10 +119,7 @@
 		386AF3B0290BFA97009CDE32 /* Test Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				386AF3B1290BFA97009CDE32 /* MockTimer.swift */,
-				380A438E290C06B00056EF00 /* MockSide.swift */,
 				386AF3B2290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift */,
-				38F14552291C9A9F00D0B1EE /* TestConstants.swift */,
 			);
 			path = "Test Helpers";
 			sourceTree = "<group>";
@@ -297,11 +272,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				386AF3C0290BFAA8009CDE32 /* GoClock.swift in Sources */,
 				38F1456B2922043500D0B1EE /* GoClockEx.swift in Sources */,
-				386AF3BF290BFAA8009CDE32 /* GoTimer.swift in Sources */,
 				38F1456D292270B000D0B1EE /* RemainingTime.swift in Sources */,
-				386AF3C1290BFAA8009CDE32 /* Side.swift in Sources */,
+				386AF3C1290BFAA8009CDE32 /* TimeSetting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,14 +282,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				386AF3B4290BFA97009CDE32 /* ConcreteSideTests.swift in Sources */,
 				38F145592920910200D0B1EE /* GoClockExTests.swift in Sources */,
-				38F14553291C9A9F00D0B1EE /* TestConstants.swift in Sources */,
-				380A438F290C06B00056EF00 /* MockSide.swift in Sources */,
-				386AF3B7290BFA97009CDE32 /* MockTimer.swift in Sources */,
-				386AF3B6290BFA97009CDE32 /* GoClockTests.swift in Sources */,
 				386AF3B8290BFA97009CDE32 /* XCTestCase+TrackForMemoryLeaks.swift in Sources */,
-				386AF3B5290BFA97009CDE32 /* GoTimerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				38F14551291C9A6600D0B1EE /* GoClockIntegrationTests.swift in Sources */,
-				38F14554291C9AAB00D0B1EE /* TestConstants.swift in Sources */,
 				38F14555291C9AC600D0B1EE /* XCTestCase+TrackForMemoryLeaks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

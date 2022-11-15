@@ -11,8 +11,8 @@ import XCTest
 final class GoClockExTests: XCTestCase {
     
     override func setUp() {
-        XTimer.currentTimer = nil
-        XTimer.messages.removeAll()
+        MockTimer.currentTimer = nil
+        MockTimer.messages.removeAll()
     }
     
     func test_actionsAlterStatesCorrectly() {
@@ -60,25 +60,25 @@ final class GoClockExTests: XCTestCase {
     
     func test_actionsScheduleAndInvalidateTimerCorrectly() {
         let sut = makeSUT()
-        XCTAssertNil(XTimer.currentTimer)
+        XCTAssertNil(MockTimer.currentTimer)
         
         sut.start()
-        XCTAssertNotNil(XTimer.currentTimer)
-        XCTAssertEqual(XTimer.messages, [.schedule])
+        XCTAssertNotNil(MockTimer.currentTimer)
+        XCTAssertEqual(MockTimer.messages, [.schedule])
         
         sut.switchSide()
-        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule])
+        XCTAssertEqual(MockTimer.messages, [.schedule, .invalidate, .schedule])
         
         sut.pause()
-        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate])
+        XCTAssertEqual(MockTimer.messages, [.schedule, .invalidate, .schedule, .invalidate])
         
         sut.resume()
-        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule])
+        XCTAssertEqual(MockTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule])
         
         sut.pause()
-        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule, .invalidate])
+        XCTAssertEqual(MockTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule, .invalidate])
         sut.reset()
-        XCTAssertEqual(XTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule, .invalidate])
+        XCTAssertEqual(MockTimer.messages, [.schedule, .invalidate, .schedule, .invalidate, .schedule, .invalidate])
     }
     
     func test_timerTickingInRunningState_updateRemainingTimeAndCallsUpdatedBlock() {
@@ -92,10 +92,10 @@ final class GoClockExTests: XCTestCase {
         sut.start()
         XCTAssertEqual(updatedCount, 1)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(updatedCount, 1)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(updatedCount, 2)
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 299)
         
@@ -108,8 +108,8 @@ final class GoClockExTests: XCTestCase {
         sut.switchSide()
         XCTAssertEqual(updatedCount, 5)
         
-        XTimer.tick()
-        XTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(updatedCount, 6)
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 299)
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 299)
@@ -118,8 +118,8 @@ final class GoClockExTests: XCTestCase {
         sut.resume()
         
         XCTAssertEqual(updatedCount, 8)
-        XTimer.tick()
-        XTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(updatedCount, 9)
     }
     
@@ -132,32 +132,32 @@ final class GoClockExTests: XCTestCase {
         }
         
         sut.start()
-        XTimer.tick()
-        XTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.hostRemainingTime.stillFree, true)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.hostRemainingTime.stillFree, true)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 1)
         XCTAssertEqual(sut.hostRemainingTime.stillFree, false)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 1)
         XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 2)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 2)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 2)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 1)
         XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 1)
     }
@@ -172,32 +172,32 @@ final class GoClockExTests: XCTestCase {
         
         sut.start()
         sut.switchSide()
-        XTimer.tick()
-        XTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.guestRemainingTime.stillFree, true)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.guestRemainingTime.stillFree, true)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 1)
         XCTAssertEqual(sut.guestRemainingTime.stillFree, false)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 1)
         XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 2)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 2)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 2)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 1)
         XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 1)
     }
@@ -212,14 +212,14 @@ final class GoClockExTests: XCTestCase {
         }
         sut.start()
         
-        XTimer.tick()
-        XTimer.tick()
-        XTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
         
         XCTAssertEqual(sut.hostRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.hostRemainingTime.remainingCountDownTimes, 1)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.state, .timedOut(atHost: true))
     }
     
@@ -234,40 +234,40 @@ final class GoClockExTests: XCTestCase {
         sut.start()
         sut.switchSide()
         
-        XTimer.tick()
-        XTimer.tick()
-        XTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
+        MockTimer.tick()
         
         XCTAssertEqual(sut.guestRemainingTime.currentSeconds, 0)
         XCTAssertEqual(sut.guestRemainingTime.remainingCountDownTimes, 1)
         
-        XTimer.tick()
+        MockTimer.tick()
         XCTAssertEqual(sut.state, .timedOut(atHost: false))
     }
     
     // MARK: -- Helpers
     
     private func makeSUT(interval: TimeInterval = DefaultInterval, timeSetting: TimeSetting = defaultTimeSetting()) -> GoClockEx {
-        let sut = GoClockEx(timeSetting: timeSetting, interval: interval, timeProvider: XTimer.self)
+        let sut = GoClockEx(timeSetting: timeSetting, interval: interval, timeProvider: MockTimer.self)
         
         trackForMemoryLeaks(sut)
         return sut
     }
     
-    private class XTimer: Timer {
+    private class MockTimer: Timer {
         
         enum Message {
             case schedule
             case invalidate
         }
         
-        static var currentTimer: XTimer?
+        static var currentTimer: MockTimer?
         static var messages = [Message]()
         static var block: ((Timer) -> Void)?
         
         override class func scheduledTimer(withTimeInterval interval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
             
-            let timer = XTimer()
+            let timer = MockTimer()
             currentTimer = timer
             self.block = block
             messages.append(.schedule)
@@ -275,8 +275,8 @@ final class GoClockExTests: XCTestCase {
         }
         
         override func invalidate() {
-            XTimer.currentTimer = nil
-            XTimer.messages.append(.invalidate)
+            MockTimer.currentTimer = nil
+            MockTimer.messages.append(.invalidate)
         }
         
         static func tick() {
