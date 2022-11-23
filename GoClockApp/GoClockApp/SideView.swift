@@ -12,6 +12,7 @@ final class SideView: UIView {
         self.init()
         
         timeLabel = UILabel()
+        timeLabel.font = .preferredFont(forTextStyle: .largeTitle)
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         if isHostSide {
